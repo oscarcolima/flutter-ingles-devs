@@ -40,6 +40,7 @@ dependencies:
   tdtxle_data_format:
     git: https://github.com/LuisDeLaValie/tdtxle_data_format.git
   tdtx_nf_icons: ^3.2.1+2
+  go_router: ^14.0.2
 
 dev_dependencies:
   flutter_test:

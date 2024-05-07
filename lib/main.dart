@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 
-import 'pages/registro/registro_page.dart';
+import 'router/my_router.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,9 +9,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Material App',
-      home: RegistroPage(),
+      // home: RegistroPage(),
     );
   }
 }

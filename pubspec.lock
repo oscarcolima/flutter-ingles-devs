@@ -107,6 +107,19 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: "9e0f7d1a3e7dc5010903e330fbc5497872c4c3cf6626381d69083cc1d5113c1e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.0.2"
   google_fonts:
     dependency: "direct main"
     description:
@@ -163,6 +176,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   matcher:
     dependency: transitive
     description:
@@ -312,6 +333,23 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  tdtx_nf_icons:
+    dependency: "direct main"
+    description:
+      name: tdtx_nf_icons
+      sha256: "2223d90f7d5dbf8feef9579e2a2e338f192c0afae4455905ddac98c8055ff591"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1+2"
+  tdtxle_data_format:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "755c9ec6269cf22d1bf449cdd2fc07569da164e4"
+      url: "https://github.com/LuisDeLaValie/tdtxle_data_format.git"
+    source: git
+    version: "0.0.1"
   term_glyph:
     dependency: transitive
     description:
