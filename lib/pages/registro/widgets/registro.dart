@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/Tecnologias_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
 import 'package:tdtxle_data_format/formatter/number_formatter.dart';
@@ -34,7 +35,7 @@ class Registro extends StatelessWidget {
     ];
 
     return Container(
-      constraints: BoxConstraints(maxWidth: 500),
+      constraints: const BoxConstraints(maxWidth: 500),
       child: Card(
         color: const Color.fromRGBO(255, 255, 255, 1),
         child: Padding(
@@ -86,10 +87,13 @@ class Registro extends StatelessWidget {
               const SizedBox(height: 20),
               FilledButton(
                 style: FilledButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(0, 31, 94, 1),
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
-                onPressed: () {},
-                child: Text("Empezar test"),
+                    backgroundColor: const Color.fromRGBO(0, 31, 94, 1),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8)),
+                onPressed: () {
+                  context.go('/test');
+                },
+                child: const Text("Empezar test"),
               ),
               const SizedBox(height: 20),
               Text(
@@ -130,7 +134,7 @@ class Registro extends StatelessWidget {
           width: double.infinity,
           child: ListTile(
             title: Text(e.texto),
-            leading:  Icon(TDTxNFIcons.nf_dev_python),
+            leading: Icon(TDTxNFIcons.nf_dev_python),
           ),
         ),
       );
