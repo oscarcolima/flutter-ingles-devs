@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_ingles_devs/pages/test/widgets/pregunta_widget.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TestPage extends StatefulWidget {
@@ -107,10 +108,15 @@ class _TestPageState extends State<TestPage> {
                   backgroundColor: const Color(0xffEB8D00),
                 ),
                 onPressed: () {
+                  if (terminar == lista.length) {
+                    context.replace(Uri(path: '/thank/pako').toString());
+                  }else{
+
                   setState(() {
                     nivel += 1;
                   });
                   _scrollController.jumpTo(0);
+                  }
                 },
                 child: Padding(
                   padding:
