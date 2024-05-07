@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.10+1
   google_fonts: ^6.2.1
+  tdtxle_data_format:
+    git: https://github.com/LuisDeLaValie/tdtxle_data_format.git
+  tdtx_nf_icons: ^3.2.1+2
 
 dev_dependencies:
   flutter_test:

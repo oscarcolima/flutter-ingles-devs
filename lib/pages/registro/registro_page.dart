@@ -10,7 +10,7 @@ class RegistroPage extends StatelessWidget {
     return PrincipalLayout(
       body: SingleChildScrollView(
         child: Column(
-          children: [Registro()],
+          children: [RegistroView()],
         ),
       ),
     );
