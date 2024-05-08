@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NivelPage extends StatelessWidget {
-  const NivelPage({Key? key}) : super(key: key);
+  const NivelPage({super.key});
 
   @override
   Widget build(BuildContext context) {

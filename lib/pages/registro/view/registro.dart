@@ -1,20 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/registro.dart';
 
 class RegistroView extends StatelessWidget {
-  const RegistroView({Key? key}) : super(key: key);
+  const RegistroView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(68, 224, 255, 0.2),
+      color: const Color.fromRGBO(68, 224, 255, 0.2),
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 50),
+      padding: const EdgeInsets.symmetric(vertical: 50),
       child: Row(
         children: [
           Expanded(
@@ -22,8 +20,8 @@ class RegistroView extends StatelessWidget {
               child: Texto(),
             ),
           ),
-          Expanded(
-              child: const Center(
+          const Expanded(
+              child: Center(
             child: Registro(),
           ))
         ],
@@ -39,12 +37,8 @@ class RegistroView extends StatelessWidget {
       fontWeight: FontWeight.w700,
     );
 
-    final listaStyle = GoogleFonts.getFont(
-      'Poppins',
-      fontSize: 18,
-      fontWeight: FontWeight.w500,
-    );
-
+    
+    
     List<String> listaDeOpciones = ["A", "B", "C", "D", "E", "F", "G"];
 
     return Card(
@@ -57,7 +51,7 @@ class RegistroView extends StatelessWidget {
               "Descubre tu nivel de Inglés",
               style: tituloStyle,
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: Icon(Icons.clear),
@@ -70,6 +64,7 @@ class RegistroView extends StatelessWidget {
             DropdownButtonFormField(
               items: listaDeOpciones.map((e) {
                 return DropdownMenuItem(
+                  value: e,
                   child: SizedBox(
                     width: double.infinity,
                     child: Text(
@@ -77,7 +72,6 @@ class RegistroView extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  value: e,
                 );
               }).toList(),
               onChanged: (value) {},
@@ -90,10 +84,11 @@ class RegistroView extends StatelessWidget {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Container Texto() {
     final tituloStyle = GoogleFonts.getFont(
       'Poppins',
-      color: Color.fromRGBO(0, 31, 94, 1),
+      color: const Color.fromRGBO(0, 31, 94, 1),
       fontSize: 44,
       fontWeight: FontWeight.w700,
     );
@@ -105,14 +100,14 @@ class RegistroView extends StatelessWidget {
     );
     return Container(
       margin: const EdgeInsets.all(61),
-      constraints: BoxConstraints(maxWidth: 405),
+      constraints: const BoxConstraints(maxWidth: 405),
       child: Column(
         children: [
           SvgPicture.asset(
             'assets/svgs/undraw_around_the_world_re_rb1p 1.svg',
             width: 250,
           ),
-          SizedBox(
+          const SizedBox(
             height: 61,
           ),
           Text("¿Quieres saber tu nivel de inglés?", style: tituloStyle),

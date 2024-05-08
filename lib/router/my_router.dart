@@ -16,7 +16,7 @@ final router = GoRouter(
           GoRoute(
               path: 'thank/:usuario',
               builder: (context, state) {
-                final usuario = state.pathParameters['userId'];
+                // final usuario = state.pathParameters['userId'];
                 return const NivelPage();
               }),
         ]),

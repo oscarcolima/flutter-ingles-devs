@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ingles_devs/data/model/Registro_model.dart';
-import 'package:flutter_ingles_devs/data/model/Tecnologias_model.dart';
+import 'package:flutter_ingles_devs/data/model/registro_model.dart';
+import 'package:flutter_ingles_devs/data/model/tecnologias_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -10,7 +10,7 @@ import 'package:tdtxle_data_format/formatter/number_formatter.dart';
 import 'package:tdtxle_data_format/formatter/phone_input_formatter.dart';
 
 class Registro extends StatefulWidget {
-  const Registro({Key? key}) : super(key: key);
+  const Registro({super.key});
 
   @override
   State<Registro> createState() => _RegistroState();
@@ -235,11 +235,11 @@ class _RegistroState extends State<Registro> {
         final response = await dio.post(
             'http://localhost:5015/api/Registro/registrar',
             data: registro.toJson());
-        print(response.data);
         final newRegistro = RegistroModel.fromMap(response.data);
 
         var box = Hive.box('registro');
         box.putAll(newRegistro.toMap());
+        // ignore: use_build_context_synchronously
         context.go('/test');
       } catch (e) {
         print(e);

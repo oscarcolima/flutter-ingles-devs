@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class PrincipalLayout extends StatelessWidget {
@@ -7,7 +9,7 @@ class PrincipalLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
         // elevation: 10,
         foregroundColor: Color.fromRGBO(255, 255, 255, 1),

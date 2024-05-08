@@ -5,7 +5,6 @@ import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_ingles_devs/pages/test/widgets/pregunta_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({super.key});
@@ -42,7 +41,7 @@ class _TestPageState extends State<TestPage> {
         (aumnet < (questions?.length ?? 0)) ? aumnet : questions?.length ?? 0;
   }
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +87,7 @@ class _TestPageState extends State<TestPage> {
                   minHeight: 18,
                 ),
               ),
-              if (questions == null) Text("Cargando Preguntas"),
+              if (questions == null) const Text("Cargando Preguntas"),
               if (questions != null)
                 ...questions!.sublist(start, terminar).map(
                       (val) => PreguntaWidget(
