@@ -1,14 +1,48 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ingles_devs/data/model/Registro_model.dart';
 import 'package:flutter_ingles_devs/data/model/Tecnologias_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
 import 'package:tdtxle_data_format/formatter/number_formatter.dart';
 import 'package:tdtxle_data_format/formatter/phone_input_formatter.dart';
 
-class Registro extends StatelessWidget {
+class Registro extends StatefulWidget {
   const Registro({Key? key}) : super(key: key);
 
+  @override
+  State<Registro> createState() => _RegistroState();
+}
+
+class _RegistroState extends State<Registro> {
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+
+  void getdata() async {
+    try {
+      //http://localhost:5015/api/Registro/tecnologias
+
+      final dio = Dio();
+      final response =
+          await dio.get('http://localhost:5015/api/Registro/tecnologias');
+      listaDeOpciones = (response.data as List<dynamic>)
+          .map((e) => TecnologiasModel.fromMap(e as Map<String, dynamic>))
+          .toList();
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  RegistroModel registro = RegistroModel();
+  List<TecnologiasModel> listaDeOpciones = [];
+
+  final _keyForm = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final tituloStyle = GoogleFonts.getFont(
@@ -24,87 +58,138 @@ class Registro extends StatelessWidget {
       fontWeight: FontWeight.w400,
     );
 
-    List<Catalogos> listaDeOpciones = [
-      Catalogos(value: "A", texto: "A"),
-      Catalogos(value: "B", texto: "B"),
-      Catalogos(value: "C", texto: "C"),
-      Catalogos(value: "D", texto: "D"),
-      Catalogos(value: "E", texto: "E"),
-      Catalogos(value: "F", texto: "F"),
-      Catalogos(value: "G", texto: "G"),
-    ];
-
     return Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: Card(
         color: const Color.fromRGBO(255, 255, 255, 1),
         child: Padding(
           padding: const EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Descubre tu nivel de Inglés",
-                style: tituloStyle,
-              ),
-              const SizedBox(height: 35),
-              TextField(
-                style: inputStyle,
-                decoration: textFieldDecoration("nombre Completo"),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                style: inputStyle,
-                decoration: textFieldDecoration("Correo electrónico"),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                style: inputStyle,
-                decoration: textFieldDecoration("¿Cuál es tu profesión?"),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                style: inputStyle,
-                inputFormatters: [PhoneInputFormatter()],
-                decoration: textFieldDecoration("Telefono"),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                style: inputStyle,
-                inputFormatters: [NumberFormatter()],
-                decoration:
-                    textFieldDecoration("¿Cuántos años de experiencia tienes?"),
-              ),
-              const SizedBox(height: 20),
-              DropdownButtonFormField(
-                items: generarLista(listaDeOpciones),
-                onChanged: (value) {},
-                isDense: true,
-                isExpanded: true,
-                decoration: textFieldDecoration(
-                    "¿Con qué tecnología trabajas principalmente?"),
-              ),
-              const SizedBox(height: 20),
-              FilledButton(
-                style: FilledButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(0, 31, 94, 1),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 8)),
-                onPressed: () {
-                  context.go('/test');
-                },
-                child: const Text("Empezar test"),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                "Al hacer clic en “Comenzar”acepto el uso de mis datos personales de acuerdo con la Política de Privacidad y recibir las últimas noticias, ofertas e información sobre lInglés para Devs por email.",
-                style: GoogleFonts.getFont(
-                  'Poppins',
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
+          child: Form(
+            key: _keyForm,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Descubre tu nivel de Inglés",
+                  style: tituloStyle,
                 ),
-              )
-            ],
+                const SizedBox(height: 35),
+                TextFormField(
+                  style: inputStyle,
+                  decoration: textFieldDecoration("nombre Completo"),
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "Complete el compo";
+                    }
+
+                    registro.nombrecompleto = value!;
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: inputStyle,
+                  decoration: textFieldDecoration("Correo electrónico"),
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "Complete el compo";
+                    }
+
+                    registro.email = value!;
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: inputStyle,
+                  decoration: textFieldDecoration("¿Cuál es tu profesión?"),
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "Complete el compo";
+                    }
+
+                    registro.profesion = value!;
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: inputStyle,
+                  inputFormatters: [PhoneInputFormatter()],
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "Complete el compo";
+                    }
+                    if (int.tryParse(value?.replaceAll('-', '') ?? "") ==
+                        null) {
+                      return "Selo numero";
+                    }
+
+                    if ((value?.replaceAll('-', '') ?? "").length != 10) {
+                      return "telefono no valido";
+                    }
+
+                    registro.telefono = value!;
+                    return null;
+                  },
+                  decoration: textFieldDecoration("Telefono"),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: inputStyle,
+                  inputFormatters: [NumberFormatter()],
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "Complete el compo";
+                    }
+                    if (int.tryParse(value ?? "") == null) {
+                      return "Selo numero";
+                    }
+
+                    registro.experiencia = int.parse(value!);
+                    return null;
+                  },
+                  decoration: textFieldDecoration(
+                      "¿Cuántos años de experiencia tienes?"),
+                ),
+                const SizedBox(height: 20),
+                DropdownButtonFormField(
+                  items: generarLista(listaDeOpciones),
+                  onChanged: (value) {},
+                  isDense: true,
+                  isExpanded: true,
+                  decoration: textFieldDecoration(
+                      "¿Con qué tecnología trabajas principalmente?"),
+                  validator: (value) {
+                    if (value == null) {
+                      return "Seleccione Area";
+                    }
+
+                    registro.technology = value;
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(0, 31, 94, 1),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8)),
+                  onPressed: registrar,
+                  child: const Text("Empezar test"),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  "Al hacer clic en “Comenzar”acepto el uso de mis datos personales de acuerdo con la Política de Privacidad y recibir las últimas noticias, ofertas e información sobre lInglés para Devs por email.",
+                  style: GoogleFonts.getFont(
+                    'Poppins',
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -126,18 +211,39 @@ class Registro extends StatelessWidget {
     );
   }
 
-  generarLista(List<Catalogos> lista) {
+  List<DropdownMenuItem<int>> generarLista(List<TecnologiasModel> lista) {
     return lista.map((e) {
       return DropdownMenuItem(
-        value: e.value,
+        value: e.id,
         child: SizedBox(
           width: double.infinity,
           child: ListTile(
-            title: Text(e.texto),
-            leading: Icon(TDTxNFIcons.nf_dev_python),
+            title: Text(e.technology),
+            leading: Icon(TDTxNFIcons.fromCLass(e.icon)),
           ),
         ),
       );
     }).toList();
+  }
+
+  void registrar() async {
+    if (_keyForm.currentState!.validate()) {
+      try {
+        //http://localhost:5015/api/Registro/tecnologias
+
+        final dio = Dio();
+        final response = await dio.post(
+            'http://localhost:5015/api/Registro/registrar',
+            data: registro.toJson());
+        print(response.data);
+        final newRegistro = RegistroModel.fromMap(response.data);
+
+        var box = Hive.box('registro');
+        box.putAll(newRegistro.toMap());
+        context.go('/test');
+      } catch (e) {
+        print(e);
+      }
+    }
   }
 }

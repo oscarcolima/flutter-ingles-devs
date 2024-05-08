@@ -3,6 +3,7 @@ import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_ingles_devs/pages/test/widgets/pregunta_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({super.key});
@@ -12,6 +13,13 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
+  @override
+  void initState() {
+    super.initState();
+    var box = Hive.box('registro');
+    print(box.toMap());
+  }
+
   List<int> lista = [
     1,
     2,
@@ -110,12 +118,11 @@ class _TestPageState extends State<TestPage> {
                 onPressed: () {
                   if (terminar == lista.length) {
                     context.replace(Uri(path: '/thank/pako').toString());
-                  }else{
-
-                  setState(() {
-                    nivel += 1;
-                  });
-                  _scrollController.jumpTo(0);
+                  } else {
+                    setState(() {
+                      nivel += 1;
+                    });
+                    _scrollController.jumpTo(0);
                   }
                 },
                 child: Padding(

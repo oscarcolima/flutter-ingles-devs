@@ -3,23 +3,23 @@ import 'dart:convert';
 
 class TecnologiasModel {
   final int id;
-  final String name;
+  final String technology;
   final String icon;
   
   TecnologiasModel({
     required this.id,
-    required this.name,
+    required this.technology,
     required this.icon,
   });
 
   TecnologiasModel copyWith({
     int? id,
-    String? name,
+    String? technology,
     String? icon,
   }) {
     return TecnologiasModel(
       id: id ?? this.id,
-      name: name ?? this.name,
+      technology: technology ?? this.technology,
       icon: icon ?? this.icon,
     );
   }
@@ -27,7 +27,7 @@ class TecnologiasModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'name': name,
+      'technology': technology,
       'icon': icon,
     };
   }
@@ -35,7 +35,7 @@ class TecnologiasModel {
   factory TecnologiasModel.fromMap(Map<String, dynamic> map) {
     return TecnologiasModel(
       id: map['id'] as int,
-      name: map['name'] as String,
+      technology: map['technology'] as String,
       icon: map['icon'] as String,
     );
   }
@@ -46,7 +46,7 @@ class TecnologiasModel {
       TecnologiasModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'TecnologiasModel(id: $id, name: $name, icon: $icon)';
+  String toString() => 'TecnologiasModel(id: $id, technology: $technology, icon: $icon)';
 
   @override
   bool operator ==(covariant TecnologiasModel other) {
@@ -54,12 +54,12 @@ class TecnologiasModel {
   
     return 
       other.id == id &&
-      other.name == name &&
+      other.technology == technology &&
       other.icon == icon;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ icon.hashCode;
+  int get hashCode => id.hashCode ^ technology.hashCode ^ icon.hashCode;
 }
 
 class Catalogos {
