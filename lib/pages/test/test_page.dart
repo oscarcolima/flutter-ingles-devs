@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ingles_devs/data/model/questions_model.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_ingles_devs/pages/test/widgets/pregunta_widget.dart';
 import 'package:go_router/go_router.dart';
@@ -16,45 +18,28 @@ class _TestPageState extends State<TestPage> {
   @override
   void initState() {
     super.initState();
-    var box = Hive.box('registro');
-    print(box.toMap());
+
+    getQuestions();
   }
 
-  List<int> lista = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27
-  ];
+  List<QuestionsModel>? questions;
+  void getQuestions() async {
+    final dio = Dio();
+    final response =
+        await dio.get('http://localhost:5015/api/Test/getquestions');
+
+    questions = (response.data as List<dynamic>)
+        .map((e) => QuestionsModel.fromMap(e as Map<String, dynamic>))
+        .toList();
+    setState(() {});
+  }
 
   int nivel = 1, start = 0, terminar = 0;
   void gnenrarLista() {
     start = terminar;
     int aumnet = nivel * 5;
-    terminar = (aumnet < lista.length) ? aumnet : lista.length;
+    terminar =
+        (aumnet < (questions?.length ?? 0)) ? aumnet : questions?.length ?? 0;
   }
 
   ScrollController _scrollController = ScrollController();
@@ -98,25 +83,27 @@ class _TestPageState extends State<TestPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: LinearProgressIndicator(
-                  value: start / lista.length,
+                  value: start / (questions?.length ?? 1),
                   color: const Color.fromRGBO(13, 110, 253, 1),
                   minHeight: 18,
                 ),
               ),
-              ...lista.sublist(start, terminar).map(
-                    (index) => PreguntaWidget(
-                      index: index,
-                      pregunta: "_____ you a good student in college?",
-                      respuestas: const ["Were", "Where", "How", "Was"],
+              if (questions == null) Text("Cargando Preguntas"),
+              if (questions != null)
+                ...questions!.sublist(start, terminar).map(
+                      (val) => PreguntaWidget(
+                        index: val.id,
+                        pregunta: val.question,
+                        respuestas: const ["Were", "Where", "How", "Was"],
+                      ),
                     ),
-                  ),
               const SizedBox(height: 50),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffEB8D00),
                 ),
                 onPressed: () {
-                  if (terminar == lista.length) {
+                  if (terminar == (questions?.length ?? -1)) {
                     context.replace(Uri(path: '/thank/pako').toString());
                   } else {
                     setState(() {
