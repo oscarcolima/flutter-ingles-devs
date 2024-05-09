@@ -54,8 +54,8 @@ class QuestionsModel {
       'type': type,
       'rightScore': rightScore,
       'wrongScore': wrongScore,
-      'create_at': createat.millisecondsSinceEpoch,
-      'update_at': updateat.millisecondsSinceEpoch,
+      'create_at': createat.toIso8601String(),
+      'update_at': updateat.toIso8601String(),
       'answers': answers?.map((x) => x.toMap()).toList(),
     };
   }

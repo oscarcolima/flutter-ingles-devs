@@ -1,14 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class RegistroModel {
-  late int id; //: 0,
-  late String nombrecompleto; //: "string",
-  late String telefono; //: "string",
-  late String email; //: "string",
-  late String profesion; //: "string",
-  late int experiencia; //: 0,
-  late int technology; //: 0,
-  late int? score; //: 0
+  late int? id;
+  late String nombrecompleto;
+  late String telefono;
+  late String email;
+  late String profesion;
+  late int experiencia;
+  late int technology;
+  late int? score;
+  late int? correctanswers;
+  late String? level;
   RegistroModel({
     this.id = 0,
     this.nombrecompleto = "",
@@ -18,6 +21,8 @@ class RegistroModel {
     this.experiencia = 0,
     this.technology = 0,
     this.score,
+    this.correctanswers,
+    this.level,
   });
 
   RegistroModel copyWith({
@@ -29,6 +34,8 @@ class RegistroModel {
     int? experiencia,
     int? technology,
     int? score,
+    int? correctanswers,
+    String? level,
   }) {
     return RegistroModel(
       id: id ?? this.id,
@@ -39,6 +46,8 @@ class RegistroModel {
       experiencia: experiencia ?? this.experiencia,
       technology: technology ?? this.technology,
       score: score ?? this.score,
+      correctanswers: correctanswers ?? this.correctanswers,
+      level: level ?? this.level,
     );
   }
 
@@ -52,19 +61,24 @@ class RegistroModel {
       'experiencia': experiencia,
       'fk_technology': technology,
       'score': score,
+      'correct_answers': correctanswers,
+      'level': level,
     };
   }
 
   factory RegistroModel.fromMap(Map<String, dynamic> map) {
     return RegistroModel(
-      id: map['id'] as int,
+      id: map['id'] != null ? map['id'] as int : null,
       nombrecompleto: map['nombre_completo'] as String,
       telefono: map['telefono'] as String,
       email: map['email'] as String,
       profesion: map['profesion'] as String,
       experiencia: map['experiencia'] as int,
       technology: map['fk_technology'] as int,
-      score: map['score'] as int?,
+      score: map['score'] != null ? map['score'] as int : null,
+      correctanswers:
+          map['correct_answers'] != null ? map['correct_answers'] as int : null,
+      level: map['level'] != null ? map['level'] as String : null,
     );
   }
 
@@ -75,7 +89,7 @@ class RegistroModel {
 
   @override
   String toString() {
-    return 'RegistroModel(id: $id, nombre_completo: $nombrecompleto, telefono: $telefono, email: $email, profesion: $profesion, experiencia: $experiencia, fk_technology: $technology, score: $score)';
+    return 'RegistroModel(id: $id, nombre_completo: $nombrecompleto, telefono: $telefono, email: $email, profesion: $profesion, experiencia: $experiencia, fk_technology: $technology, score: $score, correct_answers: $correctanswers, level: $level)';
   }
 
   @override
@@ -89,7 +103,9 @@ class RegistroModel {
         other.profesion == profesion &&
         other.experiencia == experiencia &&
         other.technology == technology &&
-        other.score == score;
+        other.score == score &&
+        other.correctanswers == correctanswers &&
+        other.level == level;
   }
 
   @override
@@ -101,6 +117,8 @@ class RegistroModel {
         profesion.hashCode ^
         experiencia.hashCode ^
         technology.hashCode ^
-        score.hashCode;
+        score.hashCode ^
+        correctanswers.hashCode ^
+        level.hashCode;
   }
 }

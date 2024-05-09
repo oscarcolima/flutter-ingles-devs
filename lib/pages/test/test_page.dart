@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/questions_model.dart';
+import 'package:flutter_ingles_devs/data/model/registro_model.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_ingles_devs/pages/test/widgets/pregunta_widget.dart';
 import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class TestPage extends StatefulWidget {
@@ -41,7 +43,7 @@ class _TestPageState extends State<TestPage> {
     final aux = questions!.sublist(start, terminar);
 
     for (var i = 1; i <= aux.length; i++) {
-      final q = aux[i-1 ];
+      final q = aux[i - 1];
       final a = q.answers?.map((e) => e.answer).toList() ?? [];
       showQuestion.add(PreguntaWidget(
         index: i + start,
@@ -115,7 +117,7 @@ class _TestPageState extends State<TestPage> {
 
     if (complet) {
       if (terminar == (questions?.length ?? -1)) {
-        context.replace(Uri(path: '/thank/pako').toString());
+        sendRespuestas();
       } else {
         nivel += 1;
         gnenrarLista();
@@ -161,5 +163,29 @@ class _TestPageState extends State<TestPage> {
         ),
       ),
     ];
+  }
+
+  void sendRespuestas() {
+    final box = Hive.box("registro");
+    final user = RegistroModel.fromMap(
+        box.toMap().map<String, dynamic>((key, value) => MapEntry(key, value)));
+
+    bool complet = true;
+
+    for (var element in questions!) {
+      if (element.answers?.length != 1) {
+        complet = false;
+        break;
+      }
+    }
+
+    if (complet) {
+      IngesDevApi.test().calificar(user.id!, questions!).then((value) {
+        if (value) {
+          final pat = Uri(path: '/thank').toString();
+          context.replace(pat);
+        }
+      });
+    }
   }
 }

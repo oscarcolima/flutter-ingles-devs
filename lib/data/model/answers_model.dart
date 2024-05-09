@@ -41,8 +41,8 @@ class AnswersModel {
       'answer': answer,
       'fk_question': question,
       'iscorrect': iscorrect,
-      'create_at': createat.millisecondsSinceEpoch,
-      'update_at': updateat.millisecondsSinceEpoch,
+      'create_at': createat.toIso8601String(),
+      'update_at': updateat.toIso8601String(),
     };
   }
 
