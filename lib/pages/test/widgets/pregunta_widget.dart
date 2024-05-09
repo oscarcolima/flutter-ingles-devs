@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class PreguntaWidget extends StatefulWidget {
   final int index;
   final String pregunta;
   final List<String> respuestas;
+  final void Function(int res) res;
   const PreguntaWidget(
       {super.key,
       required this.index,
       required this.pregunta,
-      required this.respuestas});
+      required this.respuestas,
+      required this.res});
 
   @override
   State<PreguntaWidget> createState() => _PreguntaWidgetState();
@@ -17,6 +20,18 @@ class PreguntaWidget extends StatefulWidget {
 
 class _PreguntaWidgetState extends State<PreguntaWidget> {
   int? select;
+  @override
+  void initState() {
+    super.initState();
+    print("${widget.index} ${widget.pregunta}");
+  }
+
+  @override
+  void didUpdateWidget(PreguntaWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    select = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,6 +59,7 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
+              widget.res(i);
               setState(() {
                 select = i;
               });

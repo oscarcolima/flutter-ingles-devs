@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
 import 'package:flutter_ingles_devs/data/model/tecnologias_model.dart';
+import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -25,14 +26,7 @@ class _RegistroState extends State<Registro> {
 
   void getdata() async {
     try {
-      //http://localhost:5015/api/Registro/tecnologias
-
-      final dio = Dio();
-      final response =
-          await dio.get('http://localhost:5015/api/Registro/tecnologias');
-      listaDeOpciones = (response.data as List<dynamic>)
-          .map((e) => TecnologiasModel.fromMap(e as Map<String, dynamic>))
-          .toList();
+      listaDeOpciones = await IngesDevApi.registro().getTecnologias() ?? [];
       setState(() {});
     } catch (e) {
       print(e);
@@ -231,16 +225,13 @@ class _RegistroState extends State<Registro> {
       try {
         //http://localhost:5015/api/Registro/tecnologias
 
-        final dio = Dio();
-        final response = await dio.post(
-            'http://localhost:5015/api/Registro/registrar',
-            data: registro.toJson());
-        final newRegistro = RegistroModel.fromMap(response.data);
-
-        var box = Hive.box('registro');
-        box.putAll(newRegistro.toMap());
-        // ignore: use_build_context_synchronously
-        context.go('/test');
+        final newRegistro = await IngesDevApi.registro().registrar(registro);
+        if (newRegistro != null) {
+          var box = Hive.box('registro');
+          box.putAll(newRegistro.toMap());
+          // ignore: use_build_context_synchronously
+          context.go('/test');
+        }
       } catch (e) {
         print(e);
       }
