@@ -180,8 +180,12 @@ class _TestPageState extends State<TestPage> {
     }
 
     if (complet) {
-      IngesDevApi.test().calificar(user.id!, questions!).then((value) {
+      IngesDevApi.test().calificar(user.id!, questions!).then((value) async {
         if (value) {
+          final call = await IngesDevApi.registro().getCalificaion(user.id!);
+
+          await box.putAll(call!.toMap());
+
           final pat = Uri(path: '/thank').toString();
           context.replace(pat);
         }

@@ -49,6 +49,41 @@ class RegistroApi {
     }
     return null;
   }
+
+  Future<RegistroModel?> getCalificaion(int user) async {
+    try {
+      var headers = {'Content-Type': 'application/json'};
+      var request =
+          http.Request('GET', Uri.parse('$baseUrl/Getlevel?id=$user'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+         final res = await response.stream.bytesToString();
+         return RegistroModel.fromJson(res);
+      } else {
+        // print(response.statusMessage);
+        return null;
+      }
+    } on DioException catch (e) {
+      log(e.toString(), name: "calificar");
+
+      print(json.encode(<String, dynamic>{
+        'message': e.message,
+        'uri': e.requestOptions.uri.toString(),
+        'statusCode': e.response?.statusCode,
+        'statusMessage': e.response?.statusMessage,
+        'data': e.requestOptions.data,
+        'error': e.response?.data
+      }));
+      return null;
+    } catch (e) {
+      log(e.toString(), name: "calificar");
+      throw e;
+    }
+  }
 }
 
 class TestApi {

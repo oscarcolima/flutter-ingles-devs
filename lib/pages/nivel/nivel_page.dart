@@ -1,12 +1,31 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ingles_devs/data/model/registro_model.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 
-class NivelPage extends StatelessWidget {
+class NivelPage extends StatefulWidget {
   const NivelPage({super.key});
+
+  @override
+  State<NivelPage> createState() => _NivelPageState();
+}
+
+class _NivelPageState extends State<NivelPage> {
+
+late RegistroModel user;
+
+@override
+  void initState() {
+     final box = Hive.box("registro");
+     user = RegistroModel.fromMap(
+        box.toMap().map<String, dynamic>((key, value) => MapEntry(key, value)));
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +58,7 @@ class NivelPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Has respondido correctamente a 0 de 25 preguntas.",
+                          "Has respondido correctamente a ${user.correctanswers} de 25 preguntas.",
                           style: GoogleFonts.getFont(
                             'IBM Plex Sans',
                             fontSize: 21,
@@ -56,7 +75,7 @@ class NivelPage extends StatelessWidget {
                                   Border.all(color: const Color(0xffEB8D00)),
                               borderRadius: BorderRadius.circular(100)),
                           child: Text(
-                            'Nivel A1',
+                            user.level!,
                             style: GoogleFonts.getFont('Poppins',
                                 fontSize: 32,
                                 fontWeight: FontWeight.w700,
