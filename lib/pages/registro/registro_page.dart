@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
+import 'package:flutter_ingles_devs/pages/registro/view/contactos_view.dart';
 import 'package:flutter_ingles_devs/pages/registro/view/registro.dart';
 
 import 'view/como_funciona_view.dart';
@@ -17,6 +18,7 @@ class RegistroPage extends StatelessWidget {
             const RegistroView(),
             const ComoFuncionaView(),
             DeterminaNivelView(),
+            const ContactosView()
           ],
         ),
       ),
