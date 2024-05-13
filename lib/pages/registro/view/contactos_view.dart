@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/pages/registro/widgets/figura.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_ingles_devs/pages/registro/widgets/registro.dart';
 import 'package:http/http.dart' as http;
 
 import '../data/model/questions_model.dart';
@@ -14,6 +15,7 @@ class IngesDevApi {
 
   static RegistroApi registro() => RegistroApi(baseUrl: "$_uri/Registro");
   static TestApi test() => TestApi(baseUrl: "$_uri/Test");
+  static Panel panel() => Panel(baseUrl: "$_uri/Panel");
 }
 
 class RegistroApi {
@@ -61,8 +63,8 @@ class RegistroApi {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-         final res = await response.stream.bytesToString();
-         return RegistroModel.fromJson(res);
+        final res = await response.stream.bytesToString();
+        return RegistroModel.fromJson(res);
       } else {
         // print(response.statusMessage);
         return null;
@@ -133,6 +135,52 @@ class TestApi {
         'error': e.response?.data
       }));
       return false;
+    } catch (e) {
+      log(e.toString(), name: "calificar");
+      throw e;
+    }
+  }
+}
+
+class Panel {
+  // https://localhost:7263/api/Panel/getPanel
+
+  final String baseUrl;
+  Panel({
+    required this.baseUrl,
+  });
+
+  Future<List<RegistroModel>?> getPanel() async {
+    try {
+      var headers = {'Content-Type': 'application/json'};
+      var request = http.Request('GET', Uri.parse('$baseUrl/getPanel'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        final jsonData = await response.stream.bytesToString();
+        final data = json.decode(jsonData) as List<dynamic>;
+
+        final res = data.map((e) => RegistroModel.fromMap(e)).toList();
+
+        return res;
+      } else {
+        return null;
+      }
+    } on DioException catch (e) {
+      log(e.toString(), name: "calificar");
+
+      print(json.encode(<String, dynamic>{
+        'message': e.message,
+        'uri': e.requestOptions.uri.toString(),
+        'statusCode': e.response?.statusCode,
+        'statusMessage': e.response?.statusMessage,
+        'data': e.requestOptions.data,
+        'error': e.response?.data
+      }));
+      return null;
     } catch (e) {
       log(e.toString(), name: "calificar");
       throw e;
