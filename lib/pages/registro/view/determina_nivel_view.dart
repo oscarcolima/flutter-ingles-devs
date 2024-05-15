@@ -52,8 +52,6 @@ class DeterminaNivelView extends StatelessWidget {
     final sizeScreen = context
         .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
 
-    log("sizeScreen: ${sizeScreen}");
-
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: [0, 1, 2].contains(sizeScreen.index) ? 50 : 216,
@@ -69,58 +67,55 @@ class DeterminaNivelView extends StatelessWidget {
                 color: const Color(0xff001F5E)),
           ),
           const SizedBox(height: 30),
-          SizedBox(
-            height: 500,
-            width: double.infinity,
-            child: GridView.builder(
-              itemCount: _niveles.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 50,
-                mainAxisSpacing: 30,
-                crossAxisCount: 3,
-                childAspectRatio: 1.7,
-              ),
-              itemBuilder: (context, index) => Card(
-                color: const Color(0xffFCF5E1),
-                surfaceTintColor: const Color(0xffFCF5E1),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 2.5),
-                      child: Text(
-                        _niveles[index]["nivel"] ?? "",
-                        style: GoogleFonts.getFont('Poppins',
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xff001F5E)),
+          Wrap(
+            runSpacing: 20,
+            spacing: 10,
+            children: _niveles
+                .map((e) => Container(
+                      constraints:
+                          const BoxConstraints(maxWidth: 250, minWidth: 50),
+                      child: Card(
+                        color: const Color(0xffFCF5E1),
+                        surfaceTintColor: const Color(0xffFCF5E1),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 2.5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                e["nivel"] ?? "",
+                                style: GoogleFonts.getFont('Poppins',
+                                    fontSize: [0].contains(sizeScreen.index)
+                                        ? 22
+                                        : 24,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xff001F5E)),
+                              ),
+                              Text(
+                                e["nivel2"] ?? "",
+                                style: GoogleFonts.getFont('Poppins',
+                                    fontSize: [0].contains(sizeScreen.index)
+                                        ? 16
+                                        : 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xff001F5E)),
+                              ),
+                              Text(
+                                e["detalles"] ?? "",
+                                style: GoogleFonts.getFont('Poppins',
+                                    fontSize: [0].contains(sizeScreen.index)
+                                        ? 12
+                                        : 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 2.5),
-                      child: Text(
-                        _niveles[index]["nivel2"] ?? "",
-                        style: GoogleFonts.getFont('Poppins',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xff001F5E)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 2.5),
-                      child: Text(
-                        _niveles[index]["detalles"] ?? "",
-                        style: GoogleFonts.getFont('Poppins',
-                            fontSize: 18, fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                    ))
+                .toList(),
           ),
           const SizedBox(height: 30),
           Card(
@@ -153,7 +148,7 @@ class DeterminaNivelView extends StatelessWidget {
                         "Empezar test",
                         style: GoogleFonts.getFont(
                           'Poppins',
-                          fontSize: [0,1].contains(sizeScreen.index) ? 14 : 20,
+                          fontSize: [0, 1].contains(sizeScreen.index) ? 14 : 20,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
                         ),

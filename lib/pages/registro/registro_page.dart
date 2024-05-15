@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
 import 'package:flutter_ingles_devs/pages/registro/view/contactos_view.dart';
 import 'package:flutter_ingles_devs/pages/registro/view/registro.dart';
+import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/registro_page_provaider.dart';
@@ -13,6 +16,9 @@ class RegistroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+ 
+
     return ChangeNotifierProvider(
         create: (context) => RegistroPageProvaider(),
         builder: (context, child) {
@@ -21,10 +27,10 @@ class RegistroPage extends StatelessWidget {
               controller: context.read<RegistroPageProvaider>().controller,
               child: Column(
                 children: [
-                  // const RegistroView(),
-                  // const ComoFuncionaView(),
+                  const RegistroView(),
+                  const ComoFuncionaView(),
                   DeterminaNivelView(),
-                  // const ContactosView()
+                  const ContactosView()
                 ],
               ),
             ),
