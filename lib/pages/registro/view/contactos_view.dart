@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/pages/registro/provider/registro_page_provaider.dart';

@@ -153,7 +153,7 @@ class _RegistroState extends State<Registro> {
                       return "valor no valido";
                     }
 
-                    registro.experiencia = int.parse(value!);
+                    registro.experiencia = int.parse(value);
                     return null;
                   },
                   decoration: textFieldDecoration(
@@ -246,10 +246,11 @@ class _RegistroState extends State<Registro> {
           context.go('/test');
         }
       } catch (e) {
-        // ignore: avoid_print
+        // ignore: avoid_print, use_build_context_synchronously
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
             content: Text(e.toString()),
-            actions: [TextButton(onPressed: () {}, child: Text("hola"))]));
+            actions: [TextButton(onPressed: () {}, child: const Text("hola"))]));
+        // ignore: avoid_print
         print(e);
       }
     }

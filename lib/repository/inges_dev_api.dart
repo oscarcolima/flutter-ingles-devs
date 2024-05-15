@@ -38,7 +38,6 @@ class RegistroApi {
   }
 
   Future<RegistroModel?> registrar(RegistroModel registro) async {
-    final dio = Dio();
     try {
       var headers = {'Content-Type': 'application/json'};
       var request = http.Request('POST', Uri.parse('$baseUrl/registrar'));
