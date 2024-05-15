@@ -1,9 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
+import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class TableView extends StatefulWidget {
   final List<RegistroModel>? dataTable;
@@ -48,17 +52,24 @@ class _TableViewState extends State<TableView> {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context)
-        .copyWith(cardTheme: const CardTheme(color: Colors.white, elevation: 0));
+   
+    final tema = Theme.of(context).copyWith(
+        cardTheme: const CardTheme(color: Colors.white, elevation: 0));
 
-    return Theme(
-      data: tema,
-      child: PaginatedDataTable2(
-        sortColumnIndex: odernColum,
-        sortAscending: ordenAsendente,
-        columnSpacing: 100,
-        columns: generarColumnas(),
-        source: UsuariosTable(dataTable: dataTable ?? []),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        constraints: BoxConstraints(minWidth: 1400, maxWidth: 1400),
+        child: Theme(
+          data: tema,
+          child: PaginatedDataTable2(
+            sortColumnIndex: odernColum,
+            sortAscending: ordenAsendente,
+            columnSpacing: 100,
+            columns: generarColumnas(),
+            source: UsuariosTable(dataTable: dataTable ?? []),
+          ),
+        ),
       ),
     );
   }

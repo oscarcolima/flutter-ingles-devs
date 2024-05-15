@@ -16,8 +16,6 @@ class ContactosView extends StatelessWidget {
     final sizeScreen = context
         .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
 
-    log("sizeScreen: ${sizeScreen}");
-
     return CustomPaint(
       painter: MyPainter(),
       child: Center(
