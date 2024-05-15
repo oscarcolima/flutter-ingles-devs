@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/registro_page_provaider.dart';
 
 class ComoFuncionaView extends StatelessWidget {
   const ComoFuncionaView({super.key});
@@ -7,7 +10,7 @@ class ComoFuncionaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -36,7 +39,9 @@ class ComoFuncionaView extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff001F5E)),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<RegistroPageProvaider>().gotToForm();
+                  },
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 16),

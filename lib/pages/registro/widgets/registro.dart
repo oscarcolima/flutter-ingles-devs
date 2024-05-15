@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
 import 'package:flutter_ingles_devs/data/model/tecnologias_model.dart';
+import 'package:flutter_ingles_devs/pages/registro/provider/registro_page_provaider.dart';
 import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
 import 'package:tdtxle_data_format/formatter/number_formatter.dart';
 import 'package:tdtxle_data_format/formatter/phone_input_formatter.dart';
@@ -55,6 +57,7 @@ class _RegistroState extends State<Registro> {
     return Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: Card(
+        key: context.read<RegistroPageProvaider>().keyResitroForm,
         color: const Color.fromRGBO(255, 255, 255, 1),
         child: Padding(
           padding: const EdgeInsets.all(30),

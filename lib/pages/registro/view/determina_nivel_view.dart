@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/registro_page_provaider.dart';
 
 class DeterminaNivelView extends StatelessWidget {
   DeterminaNivelView({super.key});
@@ -125,7 +128,9 @@ class DeterminaNivelView extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff001F5E)),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<RegistroPageProvaider>().gotToForm();
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 16),

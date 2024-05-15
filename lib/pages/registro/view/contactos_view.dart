@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ingles_devs/pages/registro/provider/registro_page_provaider.dart';
 import 'package:flutter_ingles_devs/pages/registro/widgets/figura.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
 
 class ContactosView extends StatelessWidget {
@@ -39,7 +41,10 @@ class ContactosView extends StatelessWidget {
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff001F5E)),
-                onPressed: () {},
+                onPressed: () {
+context.read<RegistroPageProvaider>().gotToForm();
+
+                },
                 icon: Icon(
                   TDTxNFIcons.nf_fa_discord,
                   color: Colors.white,
