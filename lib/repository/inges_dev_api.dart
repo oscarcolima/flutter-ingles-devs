@@ -40,15 +40,29 @@ class RegistroApi {
   Future<RegistroModel?> registrar(RegistroModel registro) async {
     final dio = Dio();
     try {
-      final response =
+      var headers = {'Content-Type': 'application/json'};
+      var request = http.Request('POST', Uri.parse('$baseUrl/registrar'));
+      request.body = registro.toJson();
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      final res = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        return RegistroModel.fromJson(res);
+      } else {
+        // print(response.statusMessage);
+        return null;
+      }
+      /* final response =
           await dio.post('$baseUrl/registrar', data: registro.toJson());
       final newRegistro = RegistroModel.fromMap(response.data);
 
-      return newRegistro;
+      return newRegistro; */
     } catch (e) {
       log(e.toString(), name: "registrar");
+      rethrow;
     }
-    return null;
   }
 
   Future<RegistroModel?> getCalificaion(int user) async {

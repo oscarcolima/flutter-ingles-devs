@@ -92,6 +92,13 @@ class _RegistroState extends State<Registro> {
                       return "Complete el compo";
                     }
 
+                    // Validación con expresión regular
+                    if (!RegExp(
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                        .hasMatch(value ?? "")) {
+                      return 'Por favor ingrese un correo electrónico válido';
+                    }
+
                     registro.email = value!;
                     return null;
                   },
@@ -141,6 +148,9 @@ class _RegistroState extends State<Registro> {
                     }
                     if (int.tryParse(value ?? "") == null) {
                       return "Selo numero";
+                    }
+                    if (int.parse(value!) > 100) {
+                      return "valor no valido";
                     }
 
                     registro.experiencia = int.parse(value!);
@@ -237,6 +247,9 @@ class _RegistroState extends State<Registro> {
         }
       } catch (e) {
         // ignore: avoid_print
+        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+            content: Text(e.toString()),
+            actions: [TextButton(onPressed: () {}, child: Text("hola"))]));
         print(e);
       }
     }
