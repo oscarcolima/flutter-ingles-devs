@@ -56,64 +56,65 @@ class DeterminaNivelView extends StatelessWidget {
                 color: const Color(0xff001F5E)),
           ),
           const SizedBox(height: 30),
-          SizedBox(
-            height: 500,
-            width: double.infinity,
-            child: GridView.builder(
-              itemCount: _niveles.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 50,
-                mainAxisSpacing: 30,
-                crossAxisCount: 3,
-                childAspectRatio: 1.7,
-              ),
-              itemBuilder: (context, index) => Card(
-                color: const Color(0xffFCF5E1),
-                surfaceTintColor: const Color(0xffFCF5E1),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 2.5),
-                      child: Text(
-                        _niveles[index]["nivel"] ?? "",
-                        style: GoogleFonts.getFont('Poppins',
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xff001F5E)),
+          Wrap(
+            runSpacing: 20,
+            spacing: 10,
+            // verticalDirection: ,
+            // direction: Axis.horizontal,
+            children: _niveles
+                .map((e) => Container(
+                      constraints: const BoxConstraints(maxWidth: 250),
+                      child: Card(
+                        color: const Color(0xffFCF5E1),
+                        surfaceTintColor: const Color(0xffFCF5E1),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 2.5),
+                              child: Text(
+                                e["nivel"] ?? "",
+                                style: GoogleFonts.getFont('Poppins',
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xff001F5E)),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 2.5),
+                              child: Text(
+                                e["nivel2"] ?? "",
+                                style: GoogleFonts.getFont('Poppins',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xff001F5E)),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 2.5),
+                              child: Text(
+                                e["detalles"] ?? "",
+                                style: GoogleFonts.getFont('Poppins',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 2.5),
-                      child: Text(
-                        _niveles[index]["nivel2"] ?? "",
-                        style: GoogleFonts.getFont('Poppins',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xff001F5E)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 2.5),
-                      child: Text(
-                        _niveles[index]["detalles"] ?? "",
-                        style: GoogleFonts.getFont('Poppins',
-                            fontSize: 18, fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                    ))
+                .toList(),
           ),
           const SizedBox(height: 30),
           Card(
             color: const Color(0xffD8EFF4),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
