@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -9,29 +13,37 @@ class ComoFuncionaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeScreen = context
+        .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+      padding: EdgeInsets.symmetric(
+        horizontal: [0, 1, 2].contains(sizeScreen.index) ? 1 : 20,
+        vertical: 50,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(
-            width: 486,
+          Container(
+            constraints: const BoxConstraints(maxWidth: 486),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "¿Cómo funciona el test de nivel de inglés?",
                   style: GoogleFonts.getFont('Poppins',
-                      fontSize: 36,
+                      fontSize: [0].contains(sizeScreen.index) ? 34 : 36,
                       fontWeight: FontWeight.w700,
                       color: const Color(0xff3EB1C8)),
                 ),
-                const SizedBox(height: 60),
+                [0, 1, 2].contains(sizeScreen.index)
+                    ? Image.asset('assets/imgs/image 17.png')
+                    : const SizedBox(height: 60),
                 Text(
                   "Nuestro test de inglés básico, incluye 25 preguntas. \n\n¡La prueba es rápida y 100% online! Conocerás tu resultado al instante en la misma página.",
                   style: GoogleFonts.getFont(
                     'Poppins',
-                    fontSize: 18,
+                    fontSize: [0].contains(sizeScreen.index) ? 16 : 18,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -59,7 +71,8 @@ class ComoFuncionaView extends StatelessWidget {
               ],
             ),
           ),
-          Image.asset('assets/imgs/image 17.png'),
+          if (![0, 1, 2].contains(sizeScreen.index))
+            Image.asset('assets/imgs/image 17.png'),
         ],
       ),
     );

@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/registro.dart';
 
@@ -9,23 +13,34 @@ class RegistroView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeScreen = context
+        .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
+
     return Container(
       color: const Color.fromRGBO(68, 224, 255, 0.2),
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 50),
-      child: Row(
-        children: [
-          Expanded(
-            child: Center(
-              child: Texto(),
+      child: [0, 1, 2].contains(sizeScreen.index)
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(child: Texto()),
+                const Center(child: Registro())
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Texto(),
+                  ),
+                ),
+                const Expanded(
+                    child: Center(
+                  child: Registro(),
+                ))
+              ],
             ),
-          ),
-          const Expanded(
-              child: Center(
-            child: Registro(),
-          ))
-        ],
-      ),
     );
   }
 
@@ -37,8 +52,6 @@ class RegistroView extends StatelessWidget {
       fontWeight: FontWeight.w700,
     );
 
-    
-    
     List<String> listaDeOpciones = ["A", "B", "C", "D", "E", "F", "G"];
 
     return Card(

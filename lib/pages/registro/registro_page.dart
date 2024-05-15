@@ -21,10 +21,10 @@ class RegistroPage extends StatelessWidget {
               controller: context.read<RegistroPageProvaider>().controller,
               child: Column(
                 children: [
-                  const RegistroView(),
-                  const ComoFuncionaView(),
+                  // const RegistroView(),
+                  // const ComoFuncionaView(),
                   DeterminaNivelView(),
-                  const ContactosView()
+                  // const ContactosView()
                 ],
               ),
             ),

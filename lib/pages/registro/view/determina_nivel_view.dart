@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -45,8 +49,16 @@ class DeterminaNivelView extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    final sizeScreen = context
+        .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
+
+    log("sizeScreen: ${sizeScreen}");
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 216, vertical: 50),
+      padding: EdgeInsets.symmetric(
+        horizontal: [0, 1, 2].contains(sizeScreen.index) ? 50 : 216,
+        vertical: 50,
+      ),
       child: Column(
         children: [
           Text(
@@ -118,12 +130,15 @@ class DeterminaNivelView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    "¡Test de nivel de inglés GRATIS!",
-                    style: GoogleFonts.getFont('Poppins',
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xff001F5E)),
+                  Expanded(
+                    child: Text(
+                      "¡Test de nivel de inglés GRATIS!",
+                      maxLines: 4,
+                      style: GoogleFonts.getFont('Poppins',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xff001F5E)),
+                    ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -138,7 +153,7 @@ class DeterminaNivelView extends StatelessWidget {
                         "Empezar test",
                         style: GoogleFonts.getFont(
                           'Poppins',
-                          fontSize: 20,
+                          fontSize: [0,1].contains(sizeScreen.index) ? 14 : 20,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
                         ),
