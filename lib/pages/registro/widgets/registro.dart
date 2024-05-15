@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
 import 'package:flutter_ingles_devs/data/model/tecnologias_model.dart';
@@ -29,6 +28,7 @@ class _RegistroState extends State<Registro> {
       listaDeOpciones = await IngesDevApi.registro().getTecnologias() ?? [];
       setState(() {});
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -233,6 +233,7 @@ class _RegistroState extends State<Registro> {
           context.go('/test');
         }
       } catch (e) {
+        // ignore: avoid_print
         print(e);
       }
     }

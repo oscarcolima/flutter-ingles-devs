@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_ingles_devs/pages/registro/widgets/registro.dart';
 import 'package:http/http.dart' as http;
 
 import '../data/model/questions_model.dart';
@@ -11,7 +10,7 @@ import '../data/model/registro_model.dart';
 import '../data/model/tecnologias_model.dart';
 
 class IngesDevApi {
-  static final _uri = "http://localhost:5015/api";
+  static const _uri = "http://localhost:5015/api";
 
   static RegistroApi registro() => RegistroApi(baseUrl: "$_uri/Registro");
   static TestApi test() => TestApi(baseUrl: "$_uri/Test");
@@ -72,6 +71,7 @@ class RegistroApi {
     } on DioException catch (e) {
       log(e.toString(), name: "calificar");
 
+      // ignore: avoid_print
       print(json.encode(<String, dynamic>{
         'message': e.message,
         'uri': e.requestOptions.uri.toString(),
@@ -83,7 +83,7 @@ class RegistroApi {
       return null;
     } catch (e) {
       log(e.toString(), name: "calificar");
-      throw e;
+      rethrow;
     }
   }
 }
@@ -126,6 +126,7 @@ class TestApi {
     } on DioException catch (e) {
       log(e.toString(), name: "calificar");
 
+      // ignore: avoid_print
       print(json.encode(<String, dynamic>{
         'message': e.message,
         'uri': e.requestOptions.uri.toString(),
@@ -137,7 +138,7 @@ class TestApi {
       return false;
     } catch (e) {
       log(e.toString(), name: "calificar");
-      throw e;
+      rethrow;
     }
   }
 }
@@ -172,6 +173,7 @@ class Panel {
     } on DioException catch (e) {
       log(e.toString(), name: "calificar");
 
+      // ignore: avoid_print
       print(json.encode(<String, dynamic>{
         'message': e.message,
         'uri': e.requestOptions.uri.toString(),
@@ -183,7 +185,7 @@ class Panel {
       return null;
     } catch (e) {
       log(e.toString(), name: "calificar");
-      throw e;
+      rethrow;
     }
   }
 }

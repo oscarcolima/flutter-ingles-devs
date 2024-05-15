@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class PreguntaWidget extends StatefulWidget {
   final int index;
@@ -20,12 +19,7 @@ class PreguntaWidget extends StatefulWidget {
 
 class _PreguntaWidgetState extends State<PreguntaWidget> {
   int? select;
-  @override
-  void initState() {
-    super.initState();
-    print("${widget.index} ${widget.pregunta}");
-  }
-
+  
   @override
   void didUpdateWidget(PreguntaWidget oldWidget) {
     super.didUpdateWidget(oldWidget);

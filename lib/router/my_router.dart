@@ -28,6 +28,7 @@ final router = GoRouter(
           redirect: (context, state) {
             final box = Hive.box("registro");
             if (box.isEmpty) return "/";
+            return null;
           },
         ),
         GoRoute(
@@ -38,6 +39,7 @@ final router = GoRouter(
           redirect: (context, state) {
             final box = Hive.box("registro");
             if (box.get("score") == null) return "/test";
+            return null;
           },
         ),
       ],

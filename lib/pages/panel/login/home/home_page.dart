@@ -94,6 +94,6 @@ class _HomePageState extends State<HomePage> {
               textControler.text = "";
               buscar("");
             },
-            icon: Icon(Icons.clear)));
+            icon: const Icon(Icons.clear)));
   }
 }

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/questions_model.dart';
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
