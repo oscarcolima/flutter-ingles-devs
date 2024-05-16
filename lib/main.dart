@@ -8,6 +8,7 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   await Hive.openBox('registro');
+  await Hive.openBox('sesion');
   runApp(const MyApp());
 }
 

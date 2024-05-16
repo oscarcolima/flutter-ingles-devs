@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
-import 'package:flutter_ingles_devs/pages/panel/login/home/view/table_view.dart';
+import 'package:flutter_ingles_devs/pages/panel/home/view/table_view.dart';
 import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 import 'package:provider/provider.dart';
 
