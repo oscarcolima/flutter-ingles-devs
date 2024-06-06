@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,36 +12,44 @@ class ComoFuncionaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final sizeScreen = context
         .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
+    final size =
+        context.select<ResponsiveApp, double>((ResponsiveApp p) => p.size);
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: [0, 1, 2].contains(sizeScreen.index) ? 1 : 20,
+        horizontal: [0, 1, 2].contains(sizeScreen.index) ? 10 : 20,
         vertical: 50,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            constraints: const BoxConstraints(maxWidth: 486),
+            constraints: BoxConstraints(
+                maxWidth: [0, 1, 2].contains(sizeScreen.index) ? size-20 : 486),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "¿Cómo funciona el test de nivel de inglés?",
                   style: GoogleFonts.getFont('Poppins',
-                      fontSize: [0].contains(sizeScreen.index) ? 34 : 36,
+                      fontSize: [0, 1, 2].contains(sizeScreen.index) ? 32 : 36,
                       fontWeight: FontWeight.w700,
                       color: const Color(0xff3EB1C8)),
                 ),
                 [0, 1, 2].contains(sizeScreen.index)
-                    ? Image.asset('assets/imgs/image 17.png')
+                    ? Image.asset(
+                        'assets/imgs/image 17.png',
+                      )
                     : const SizedBox(height: 60),
-                Text(
-                  "Nuestro test de inglés básico, incluye 25 preguntas. \n\n¡La prueba es rápida y 100% online! Conocerás tu resultado al instante en la misma página.",
-                  style: GoogleFonts.getFont(
-                    'Poppins',
-                    fontSize: [0].contains(sizeScreen.index) ? 16 : 18,
-                    fontWeight: FontWeight.w500,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Nuestro test de inglés básico, incluye 25 preguntas. \n\n¡La prueba es rápida y 100% online! Conocerás tu resultado al instante en la misma página.",
+                    style: GoogleFonts.getFont(
+                      'Poppins',
+                      fontSize: [0].contains(sizeScreen.index) ? 16 : 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 50),

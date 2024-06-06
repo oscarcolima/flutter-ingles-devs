@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,9 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../provider/registro_page_provaider.dart';
 
-class DeterminaNivelView extends StatelessWidget {
+class DeterminaNivelView extends StatefulWidget {
   DeterminaNivelView({super.key});
 
+  @override
+  State<DeterminaNivelView> createState() => _DeterminaNivelViewState();
+}
+
+class _DeterminaNivelViewState extends State<DeterminaNivelView> {
   final _niveles = [
     {
       'nivel': "A1",
@@ -45,6 +49,7 @@ class DeterminaNivelView extends StatelessWidget {
           "Puedes comprender y usar oraciones sobre temas familiares o de interés personal."
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     final sizeScreen = context
@@ -116,48 +121,64 @@ class DeterminaNivelView extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 30),
-          Card(
-            color: const Color(0xffD8EFF4),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-              child: Row(
+          baner(sizeScreen)
+        ],
+      ),
+    );
+  }
+
+  Widget baner(SizeScreen sizeScreen) {
+    final texto = Text(
+      "¡Test de nivel de inglés GRATIS!",
+      maxLines: 4,
+      style: GoogleFonts.getFont('Poppins',
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: const Color(0xff001F5E)),
+    );
+
+    final boton = ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff001F5E)),
+      onPressed: () {
+        context.read<RegistroPageProvaider>().gotToForm();
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: Text(
+          "Empezar test",
+          textAlign: TextAlign.center,
+          style: GoogleFonts.getFont(
+            'Poppins',
+            fontSize: [0, 1].contains(sizeScreen.index) ? 14 : 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+            
+          ),
+        ),
+      ),
+    );
+
+    return Card(
+      color: const Color(0xffD8EFF4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+        child: [0, 1].contains(sizeScreen.index)
+            ? Column(
+                children: [
+                  texto,
+                  // const SizedBox(height: 10),
+                  boton,
+                ],
+              )
+            : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                    child: Text(
-                      "¡Test de nivel de inglés GRATIS!",
-                      maxLines: 4,
-                      style: GoogleFonts.getFont('Poppins',
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xff001F5E)),
-                    ),
+                    child: texto,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff001F5E)),
-                    onPressed: () {
-                      context.read<RegistroPageProvaider>().gotToForm();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 16),
-                      child: Text(
-                        "Empezar test",
-                        style: GoogleFonts.getFont(
-                          'Poppins',
-                          fontSize: [0, 1].contains(sizeScreen.index) ? 14 : 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  boton,
                 ],
               ),
-            ),
-          )
-        ],
       ),
     );
   }
