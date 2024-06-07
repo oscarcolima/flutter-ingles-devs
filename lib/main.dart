@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'router/my_router.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setPathUrlStrategy();
+
   await Hive.initFlutter();
 
   await Hive.openBox('registro');
