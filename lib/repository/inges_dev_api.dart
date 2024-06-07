@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import '../data/model/questions_model.dart';
 import '../data/model/registro_model.dart';
@@ -81,17 +82,13 @@ class RegistroApi {
         // print(response.statusMessage);
         return null;
       }
-    } on DioException catch (e) {
+    } on ClientException catch (e) {
       log(e.toString(), name: "calificar");
 
       // ignore: avoid_print
       print(json.encode(<String, dynamic>{
         'message': e.message,
-        'uri': e.requestOptions.uri.toString(),
-        'statusCode': e.response?.statusCode,
-        'statusMessage': e.response?.statusMessage,
-        'data': e.requestOptions.data,
-        'error': e.response?.data
+        'uri': e.uri,
       }));
       return null;
     } catch (e) {
@@ -123,8 +120,8 @@ class TestApi {
   Future<bool> calificar(int user, List<QuestionsModel> respuestas) async {
     try {
       var headers = {'Content-Type': 'application/json'};
-      var request = http.Request('POST',
-          Uri.parse('http://localhost:5015/api/Test/calificar?usuario=$user'));
+      var request =
+          http.Request('POST', Uri.parse('$baseUrl/calificar?usuario=$user'));
       request.body = json.encode(respuestas.map((e) => e.toMap()).toList());
       request.headers.addAll(headers);
 
@@ -136,18 +133,11 @@ class TestApi {
         // print(response.statusMessage);
         return false;
       }
-    } on DioException catch (e) {
+    } on ClientException catch (e) {
       log(e.toString(), name: "calificar");
 
       // ignore: avoid_print
-      print(json.encode(<String, dynamic>{
-        'message': e.message,
-        'uri': e.requestOptions.uri.toString(),
-        'statusCode': e.response?.statusCode,
-        'statusMessage': e.response?.statusMessage,
-        'data': e.requestOptions.data,
-        'error': e.response?.data
-      }));
+      print(json.encode(<String, dynamic>{'message': e.message, 'uri': e.uri}));
       return false;
     } catch (e) {
       log(e.toString(), name: "calificar");

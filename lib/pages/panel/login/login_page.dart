@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.symmetric(
                       horizontal:
                           [0].contains(sizeScreen.index) ? 10 : 50),
-                  child: Formulario(),
+                  child: const Formulario(),
                 ),
               ],
             )

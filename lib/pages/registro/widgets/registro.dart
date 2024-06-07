@@ -236,7 +236,6 @@ class _RegistroState extends State<Registro> {
   void registrar() async {
     if (_keyForm.currentState!.validate()) {
       try {
-        //http://localhost:5015/api/Registro/tecnologias
 
         final newRegistro = await IngesDevApi.registro().registrar(registro);
         if (newRegistro != null) {

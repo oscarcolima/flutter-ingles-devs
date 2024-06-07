@@ -82,18 +82,12 @@ class _FormularioState extends State<Formulario> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
             "Usuario no valido",
-            style: GoogleFonts.getFont(
-              'Poppins',
-              // color: const Color.fromRGBO(0, 31, 94, 1),
-              // fontSize: [0, 1].contains(sizeScreen.index) ? 24 : 32,
-              fontWeight: FontWeight.w700,
-            ),
+            style: GoogleFonts.getFont('Poppins', fontWeight: FontWeight.w700),
           ),
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.red,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           margin: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height - 100,
               right: 20,
