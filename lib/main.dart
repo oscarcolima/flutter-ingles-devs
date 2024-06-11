@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
-      title: 'Material App',
+      title: 'Ingles para Devs',
       builder: (context, child) => ResponsiveAppWidget(child: child!),
       // home: RegistroPage(),
     );

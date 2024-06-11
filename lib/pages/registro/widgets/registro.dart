@@ -73,7 +73,7 @@ class _RegistroState extends State<Registro> {
                 const SizedBox(height: 35),
                 TextFormField(
                   style: inputStyle,
-                  decoration: textFieldDecoration("nombre Completo"),
+                  decoration: textFieldDecoration("Nombre Completo"),
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
                       return "Complete el compo";
