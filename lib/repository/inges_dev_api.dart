@@ -11,7 +11,7 @@ import '../data/model/registro_model.dart';
 import '../data/model/tecnologias_model.dart';
 
 class IngesDevApi {
-  static const _uri = "http://cositec.ddns.net/api_ing_devs/api";
+  static const _uri = "https://apiinglesdev.azurewebsites.net/api";
 
   static RegistroApi registro() => RegistroApi(baseUrl: "$_uri/Registro");
   static TestApi test() => TestApi(baseUrl: "$_uri/Test");

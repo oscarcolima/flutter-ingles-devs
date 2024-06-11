@@ -9,31 +9,31 @@ import 'package:hive/hive.dart';
 final router = GoRouter(
   routes: [
     GoRoute(
-      path: '/panel',
-      builder: (context, state) => const HomePage(),
-      redirect: (context, state) {
-        final box = Hive.box("sesion");
-        if (box.isEmpty) return "/panel/login";
-
-        return null;
-      },
+      path: '/',
+      builder: (context, state) =>  RegistroPage(),
       routes: [
         GoRoute(
-          path: 'login',
-          builder: (context, state) =>  LoginPage(),
+          path: 'panel',
+          builder: (context, state) => const HomePage(),
           redirect: (context, state) {
             final box = Hive.box("sesion");
-            if (box.isNotEmpty) return "/panel";
+            if (box.isEmpty) return "/panel/login";
 
             return null;
           },
-        )
-      ],
-    ),
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const RegistroPage(),
-      routes: [
+          routes: [
+            GoRoute(
+              path: 'login',
+              builder: (context, state) => LoginPage(),
+              redirect: (context, state) {
+                final box = Hive.box("sesion");
+                if (box.isNotEmpty) return "/panel";
+
+                return null;
+              },
+            )
+          ],
+        ),
         GoRoute(
           path: 'test',
           builder: (context, state) => const TestPage(),
