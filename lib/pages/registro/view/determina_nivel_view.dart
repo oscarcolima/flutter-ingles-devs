@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../provider/registro_page_provaider.dart';
 
 class DeterminaNivelView extends StatefulWidget {
-  DeterminaNivelView({super.key});
+  const DeterminaNivelView({super.key});
 
   @override
   State<DeterminaNivelView> createState() => _DeterminaNivelViewState();

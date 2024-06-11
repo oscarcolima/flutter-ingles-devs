@@ -11,7 +11,7 @@ import 'view/como_funciona_view.dart';
 import 'view/determina_nivel_view.dart';
 
 class RegistroPage extends StatefulWidget {
-  RegistroPage({super.key});
+  const RegistroPage({super.key});
 
   @override
   State<RegistroPage> createState() => _RegistroPageState();
@@ -27,16 +27,18 @@ class _RegistroPageState extends State<RegistroPage> {
     super.dispose();
   }
 
-  void shorcut(KeyEvent event) {
+  void shortcut(KeyEvent event) {
     if (event is KeyDownEvent &&
         event.logicalKey == LogicalKeyboardKey.controlLeft) ctr = true;
-    if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.keyA)
+    if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.keyA) {
       a = true;
+    }
 
     if (event is KeyUpEvent &&
         event.logicalKey == LogicalKeyboardKey.controlLeft) ctr = false;
-    if (event is KeyUpEvent && event.logicalKey == LogicalKeyboardKey.keyA)
+    if (event is KeyUpEvent && event.logicalKey == LogicalKeyboardKey.keyA) {
       a = false;
+    }
 
     print("a:$a ctr:$ctr");
     if (a && ctr) {
@@ -51,7 +53,7 @@ class _RegistroPageState extends State<RegistroPage> {
     return KeyboardListener(
       focusNode: _focusNode,
       autofocus: true,
-      onKeyEvent: shorcut,
+      onKeyEvent: shortcut,
       child: ChangeNotifierProvider(
           create: (context) => RegistroPageProvaider(),
           builder: (context, child) {

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/pages/panel/login/view/formulario.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
-import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();

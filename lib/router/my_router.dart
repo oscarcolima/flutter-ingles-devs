@@ -10,7 +10,7 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) =>  RegistroPage(),
+      builder: (context, state) =>  const RegistroPage(),
       routes: [
         GoRoute(
           path: 'panel',
@@ -24,7 +24,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: 'login',
-              builder: (context, state) => LoginPage(),
+              builder: (context, state) => const LoginPage(),
               redirect: (context, state) {
                 final box = Hive.box("sesion");
                 if (box.isNotEmpty) return "/panel";
