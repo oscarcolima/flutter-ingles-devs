@@ -2,12 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
-class PanelLayout extends StatelessWidget {
+class PanelLayout extends StatefulWidget {
   final Widget body;
   const PanelLayout({super.key, required this.body});
 
+  @override
+  State<PanelLayout> createState() => _PanelLayoutState();
+}
+
+class _PanelLayoutState extends State<PanelLayout> {
   @override
   Widget build(BuildContext context) {
     final sizeScreen = context
@@ -32,7 +39,7 @@ class PanelLayout extends StatelessWidget {
               bottom: 0,
               right: 0,
               left: [0, 1, 2].contains(sizeScreen.index) ? 0 : 304,
-              child: body,
+              child: widget.body,
             ),
           ],
         )
@@ -83,6 +90,10 @@ class PanelLayout extends StatelessWidget {
           ),
           Spacer(),
           ListTile(
+            onTap: () {
+              Hive.box("sesion").clear();
+              context.replace("/panel/login");
+            },
             title: Text("Salir"),
           ),
         ],
