@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
-import 'package:flutter_ingles_devs/layout/principal_layout.dart';
+import 'package:flutter_ingles_devs/layout/panel_layout.dart';
 import 'package:flutter_ingles_devs/pages/panel/home/view/table_view.dart';
 import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   final textControler = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return PrincipalLayout(
+    return PanelLayout(
       body: ProxyProvider0<List<RegistroModel>?>(
         update: (context, value) => dataTable,
         child: Center(
