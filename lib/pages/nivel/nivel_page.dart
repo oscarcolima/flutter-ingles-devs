@@ -58,7 +58,7 @@ late RegistroModel user;
                           ),
                         ),
                         Text(
-                          "Has respondido correctamente a ${user.correctanswers} de 25 preguntas.",
+                          "Has respondido correctamente a ${user.correctaAnswers} de 25 preguntas.",
                           style: GoogleFonts.getFont(
                             'IBM Plex Sans',
                             fontSize: 21,

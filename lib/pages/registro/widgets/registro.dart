@@ -79,7 +79,7 @@ class _RegistroState extends State<Registro> {
                       return "Complete el compo";
                     }
 
-                    registro.nombrecompleto = value!;
+                    registro.nombreCompleto = value!;
                     return null;
                   },
                 ),

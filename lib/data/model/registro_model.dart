@@ -3,50 +3,50 @@ import 'dart:convert';
 
 class RegistroModel {
   late int? id;
-  late String nombrecompleto;
+  late String nombreCompleto;
   late String telefono;
   late String email;
   late String profesion;
   late int experiencia;
   late int technology;
   late int? score;
-  late int? correctanswers;
+  late int? correctaAnswers;
   late String? level;
   RegistroModel({
     this.id = 0,
-    this.nombrecompleto = "",
+    this.nombreCompleto = "",
     this.telefono = "",
     this.email = "",
     this.profesion = "",
     this.experiencia = 0,
     this.technology = 0,
     this.score,
-    this.correctanswers,
+    this.correctaAnswers,
     this.level,
   });
 
   RegistroModel copyWith({
     int? id,
-    String? nombrecompleto,
+    String? nombreCompleto,
     String? telefono,
     String? email,
     String? profesion,
     int? experiencia,
     int? technology,
     int? score,
-    int? correctanswers,
+    int? correctaAnswers,
     String? level,
   }) {
     return RegistroModel(
       id: id ?? this.id,
-      nombrecompleto: nombrecompleto ?? this.nombrecompleto,
+      nombreCompleto: nombreCompleto ?? this.nombreCompleto,
       telefono: telefono ?? this.telefono,
       email: email ?? this.email,
       profesion: profesion ?? this.profesion,
       experiencia: experiencia ?? this.experiencia,
       technology: technology ?? this.technology,
       score: score ?? this.score,
-      correctanswers: correctanswers ?? this.correctanswers,
+      correctaAnswers: correctaAnswers ?? this.correctaAnswers,
       level: level ?? this.level,
     );
   }
@@ -54,14 +54,14 @@ class RegistroModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'nombre_completo': nombrecompleto,
+      'nombre_completo': nombreCompleto,
       'telefono': telefono,
       'email': email,
       'profesion': profesion,
       'experiencia': experiencia,
       'fk_technology': technology,
       'score': score,
-      'correct_answers': correctanswers,
+      'correct_answers': correctaAnswers,
       'level': level,
     };
   }
@@ -69,14 +69,14 @@ class RegistroModel {
   factory RegistroModel.fromMap(Map<String, dynamic> map) {
     return RegistroModel(
       id: map['id'] != null ? map['id'] as int : null,
-      nombrecompleto: map['nombre_completo'] as String,
+      nombreCompleto: map['nombre_completo'] as String,
       telefono: map['telefono'] as String,
       email: map['email'] as String,
       profesion: map['profesion'] as String,
       experiencia: map['experiencia'] as int,
       technology: map['fk_technology'] as int,
       score: map['score'] != null ? map['score'] as int : null,
-      correctanswers:
+      correctaAnswers:
           map['correct_answers'] != null ? map['correct_answers'] as int : null,
       level: map['level'] != null ? map['level'] as String : null,
     );
@@ -89,7 +89,7 @@ class RegistroModel {
 
   @override
   String toString() {
-    return 'RegistroModel(id: $id, nombre_completo: $nombrecompleto, telefono: $telefono, email: $email, profesion: $profesion, experiencia: $experiencia, fk_technology: $technology, score: $score, correct_answers: $correctanswers, level: $level)';
+    return 'RegistroModel(id: $id, nombre_completo: $nombreCompleto, telefono: $telefono, email: $email, profesion: $profesion, experiencia: $experiencia, fk_technology: $technology, score: $score, correct_answers: $correctaAnswers, level: $level)';
   }
 
   @override
@@ -97,28 +97,28 @@ class RegistroModel {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.nombrecompleto == nombrecompleto &&
+        other.nombreCompleto == nombreCompleto &&
         other.telefono == telefono &&
         other.email == email &&
         other.profesion == profesion &&
         other.experiencia == experiencia &&
         other.technology == technology &&
         other.score == score &&
-        other.correctanswers == correctanswers &&
+        other.correctaAnswers == correctaAnswers &&
         other.level == level;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        nombrecompleto.hashCode ^
+        nombreCompleto.hashCode ^
         telefono.hashCode ^
         email.hashCode ^
         profesion.hashCode ^
         experiencia.hashCode ^
         technology.hashCode ^
         score.hashCode ^
-        correctanswers.hashCode ^
+        correctaAnswers.hashCode ^
         level.hashCode;
   }
 }
