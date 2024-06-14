@@ -1,23 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+/* // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 
-class TableView extends StatefulWidget {
+class _TableView extends StatefulWidget {
   final List<RegistroModel>? dataTable;
-  const TableView({
+  const _TableView({
     super.key,
     this.dataTable,
   });
 
   @override
-  State<TableView> createState() => _TableViewState();
+  State<_TableView> createState() => _TableViewState();
 }
 
-class _TableViewState extends State<TableView> {
+class _TableViewState extends State<_TableView> {
   int? odernColum;
   bool ordenAsendente = false;
 
@@ -25,56 +27,60 @@ class _TableViewState extends State<TableView> {
   void initState() {
     dataTable = widget.dataTable;
     super.initState();
+    final sizeScreen = context.read<ResponsiveApp>().sizeScreen;
   }
 
   @override
-  void didUpdateWidget(covariant TableView oldWidget) {
+  void didUpdateWidget(covariant _TableView oldWidget) {
     dataTable = widget.dataTable;
     odernColum = null;
     ordenAsendente = false;
     super.didUpdateWidget(oldWidget);
   }
 
-  final _colum = [
-    {'titulo': "#", 'orden': 0},
-    {'titulo': "nombre completo", 'orden': null},
-    {'titulo': "telefono", 'orden': null},
-    {'titulo': "correo", 'orden': null},
-    {'titulo': "puntaje", 'orden': 1},
-    {'titulo': "Asiertos", 'orden': 2},
-    {'titulo': "nivel", 'orden': 3},
-  ];
-
   List<RegistroModel>? dataTable;
 
   @override
   Widget build(BuildContext context) {
-   
+    final sizeScreen = context
+        .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
+    final size =
+        context.select<ResponsiveApp, double>((ResponsiveApp p) => p.size);
     final tema = Theme.of(context).copyWith(
         cardTheme: const CardTheme(color: Colors.white, elevation: 0));
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        constraints: const BoxConstraints(minWidth: 1400, maxWidth: 1400),
-        child: Theme(
-          data: tema,
-          child: PaginatedDataTable2(
-            sortColumnIndex: odernColum,
-            sortAscending: ordenAsendente,
-            columnSpacing: 100,
-            columns: generarColumnas(),
-            source: UsuariosTable(dataTable: dataTable ?? []),
-          ),
+    return Theme(
+      data: tema,
+      child: PaginatedDataTable2(
+        // minWidth: 500,
+        horizontalMargin: 10,
+        sortColumnIndex: odernColum,
+        sortAscending: ordenAsendente,
+        columnSpacing: 5,
+        columns: generarColumnas(sizeScreen),
+        source: UsuariosTable(
+          dataTable: dataTable ?? [],
+          sizeScreen: sizeScreen,
         ),
       ),
     );
   }
 
-  List<DataColumn> generarColumnas() {
-    List<DataColumn> colums = [];
-    for (var i = 0; i < _colum.length; i++) {
-      final col = _colum[i];
+  List<DataColumn> generarColumnas(SizeScreen sizeScreen) {
+    final column = [
+      {'titulo': "#", 'orden': 0},
+      {'titulo': "nombre completo", 'orden': null},
+      {'titulo': "puntaje", 'orden': 1},
+      {'titulo': "aciertos", 'orden': 2},
+      {'titulo': "nivel", 'orden': 3},
+      {'titulo': "acción", 'orden': null},
+    ];
+    print("size: $sizeScreen");
+
+    List<DataColumn> columns = [];
+    for (var i = 0; i < column.length; i++) {
+      final col = column[i];
+      // generar label de la columna
       final label = Row(
         children: [
           Text(
@@ -93,37 +99,35 @@ class _TableViewState extends State<TableView> {
         ],
       );
 
-      if (["nombre completo", "correo"].contains(col['titulo'] as String)) {
-        colums.add(DataColumn2(
-          size: ColumnSize.L,
-          onSort: (col['orden'] == null) ? null : orderby,
-          label: label,
-        ));
-      } else if (["#", 'puntaje', 'Asiertos']
-          .contains(col['titulo'] as String)) {
-        colums.add(DataColumn2(
-          size: ColumnSize.S,
-          // fixedWidth: (col['titulo'] as String) == "#" ? 100 : null,
-          onSort: (col['orden'] == null) ? null : orderby,
-          label: label,
-        ));
+      final titulo = col['titulo'] as String;
+      final onSort = (col['orden'] == null) ? null : orderby;
+      late DataColumn2 auxcolumn;
+
+      if (["nombre completo"].contains(titulo)) {
+        auxcolumn = DataColumn2(onSort: onSort, label: label);
+      } else if (["#"].contains(titulo)) {
+        auxcolumn = DataColumn2(fixedWidth: 100, onSort: onSort, label: label);
+      } else if (['puntaje', 'aciertos'].contains(titulo)) {
+        auxcolumn = DataColumn2(fixedWidth: 110, onSort: onSort, label: label);
       } else {
-        colums.add(DataColumn2(
-          onSort: (col['orden'] == null) ? null : orderby,
-          label: label,
-        ));
+        auxcolumn = DataColumn2(fixedWidth: 100, onSort: onSort, label: label);
       }
+
+      columns.add(auxcolumn);
     }
-    return colums;
+    return columns;
   }
 
+  ///
+  /// Crear Funcion de Ordenacion
+  ///
   void orderby(int columnIndex, bool ascending) {
     setState(() {
       ordenAsendente = ascending;
       odernColum = columnIndex;
     });
 
-    switch (_colum[columnIndex]['orden'] as int) {
+    switch (_column[columnIndex]['orden'] as int) {
       case 0:
         orderbyId();
         break;
@@ -207,13 +211,19 @@ class _TableViewState extends State<TableView> {
 
 class UsuariosTable extends DataTableSource {
   final List<RegistroModel> dataTable;
-  UsuariosTable({required this.dataTable});
+  final SizeScreen sizeScreen;
+
+  UsuariosTable({
+    required this.dataTable,
+    required this.sizeScreen,
+  });
 
   @override
   int get rowCount => dataTable.length;
 
   @override
   DataRow? getRow(int index) {
+    print("cambio de tamaños: $sizeScreen");
     final aux = dataTable[index];
 
     final style = GoogleFonts.getFont(
@@ -225,12 +235,12 @@ class UsuariosTable extends DataTableSource {
       cells: <DataCell>[
         DataCell(SelectableText(aux.id!.toString(), style: style)),
         DataCell(SelectableText(aux.nombrecompleto, style: style)),
-        DataCell(SelectableText(aux.telefono, style: style)),
-        DataCell(SelectableText(aux.email, style: style)),
         DataCell(SelectableText((aux.score ?? "").toString(), style: style)),
         DataCell(SelectableText((aux.correctanswers ?? "").toString(),
             style: style)),
         DataCell(SelectableText(aux.level ?? "", style: style)),
+        DataCell(
+            ElevatedButton(onPressed: () {}, child: const Text("Eliminar"))),
       ],
     );
   }
@@ -241,3 +251,4 @@ class UsuariosTable extends DataTableSource {
   @override
   int get selectedRowCount => 0;
 }
+ */
