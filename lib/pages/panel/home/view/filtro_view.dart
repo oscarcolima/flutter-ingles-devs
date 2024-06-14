@@ -1,7 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ingles_devs/data/model/registro_model.dart';
+import 'package:flutter_ingles_devs/repository/services/generar_excel.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
 import 'package:provider/provider.dart';
+import 'package:tdtxle_data_format/extenciones/date_time_extents.dart';
 
 class FiltroView extends StatefulWidget {
   final void Function(String) buscar;
@@ -33,7 +37,7 @@ class _FiltroViewState extends State<FiltroView> {
               backgroundColor: const Color.fromARGB(255, 49, 110, 51),
               foregroundColor: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: crearExcel,
             child: const Text("Exportar registro a Excel"),
           ),
         const Spacer(),
@@ -69,5 +73,54 @@ class _FiltroViewState extends State<FiltroView> {
         icon: const Icon(Icons.clear),
       ),
     );
+  }
+
+  void crearExcel() {
+    try {
+      final registros = context.read<List<RegistroModel>?>();
+
+      final excel = GenerarExcel("Registro-${DateTime.now().format("d-m-y")}");
+
+      final List<List<CellValue>> rows = registros
+              ?.map(
+                (e) => [
+                  e.id == null
+                      ? const TextCellValue("")
+                      : TextCellValue(e.id!.toString()),
+                  TextCellValue(e.nombreCompleto),
+                  TextCellValue(e.telefono),
+                  TextCellValue(e.email),
+                  e.score == null
+                      ? const TextCellValue("")
+                      : TextCellValue(e.score!.toString()),
+                  e.correctaAnswers == null
+                      ? const TextCellValue("")
+                      : TextCellValue(e.correctaAnswers!.toString()),
+                  TextCellValue(e.level ?? ""),
+                ],
+              )
+              .toList() ??
+          [];
+
+      rows.insert(
+          0,
+          [
+            const TextCellValue("#"),
+            const TextCellValue("nombre"),
+            const TextCellValue("teléfono"),
+            const TextCellValue("correo"),
+            const TextCellValue("puntaje"),
+            const TextCellValue("aciertos"),
+            const TextCellValue("nivel"),
+          ].toList());
+
+      excel.crearHoja("Cursos", rows);
+
+      excel.guardar();
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error al generar el exel\n${e.toString()}")));
+    }
   }
 }
