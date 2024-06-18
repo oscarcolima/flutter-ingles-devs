@@ -1,5 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_ingles_devs/widget/accion_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'tabla_model.dart';
@@ -7,7 +10,13 @@ import 'tabla_model.dart';
 class TablaView extends StatefulWidget {
   final List<HeaderTable> headers;
   final List<List<CellBodyTable>> body;
-  const TablaView({super.key, required this.headers, required this.body});
+  final Future<void> Function(int index)? eliminar;
+  const TablaView({
+    Key? key,
+    required this.headers,
+    required this.body,
+    this.eliminar,
+  }) : super(key: key);
 
   @override
   State<TablaView> createState() => _TablaViewState();
@@ -46,7 +55,7 @@ class _TablaViewState extends State<TablaView> {
         sortColumnIndex: sortColumnIndex,
         sortAscending: sortAscending,
         columns: headers(),
-        source: SourceDataTable(body),
+        source: SourceDataTable(body, eliminar: widget.eliminar),
       ),
     );
   }
@@ -75,6 +84,21 @@ class _TablaViewState extends State<TablaView> {
           fixedWidth: row.fixedWidth,
           label: label,
           onSort: !row.orden ? null : orderBy,
+        ),
+      );
+    }
+
+    if (widget.eliminar != null) {
+      aux.add(
+        DataColumn2(
+          label: Text(
+            "Acción",
+            style: GoogleFonts.getFont(
+              'Poppins',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       );
     }
@@ -117,40 +141,56 @@ class _TablaViewState extends State<TablaView> {
 
 class SourceDataTable extends DataTableSource {
   final List<List<CellBodyTable>> dataTable;
+  final Future<void> Function(int index)? eliminar;
 
-  SourceDataTable(this.dataTable);
+  SourceDataTable(
+    this.dataTable, {
+    this.eliminar,
+  });
 
   @override
   int get rowCount => dataTable.length;
 
   @override
   DataRow? getRow(int index) {
-    final row = dataTable[index];
+    final auxRow = dataTable[index];
 
     final style = GoogleFonts.getFont(
       'Poppins',
       fontSize: 14,
       fontWeight: FontWeight.w500,
     );
-    return DataRow(
-        cells: row
-            .map(
-              (e) => DataCell(
-                SelectableText(e.data, style: style),
-              ),
-            )
-            .toList()
-        // [
-        //   DataCell(SelectableText(aux.id!.toString(), style: style)),
-        //   DataCell(SelectableText(aux.nombrecompleto, style: style)),
-        //   DataCell(SelectableText((aux.score ?? "").toString(), style: style)),
-        //   DataCell(SelectableText((aux.correctanswers ?? "").toString(),
-        //       style: style)),
-        //   DataCell(SelectableText(aux.level ?? "", style: style)),
-        //   DataCell(
-        //       ElevatedButton(onPressed: () {}, child: const Text("Eliminar"))),
-        // ],
-        );
+
+    var row = auxRow
+        .map(
+          (e) => DataCell(
+            SelectableText(e.data, style: style),
+          ),
+        )
+        .toList();
+
+    if (eliminar != null) {
+      row.add(
+        DataCell(
+          Column(
+            children: [
+              if (eliminar != null)
+                AccionButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 15)),
+                  colorCircularProgress: Colors.white,
+                  onPressed: () async => await eliminar?.call(index),
+                  text: "Eliminar",
+                )
+            ],
+          ),
+        ),
+      );
+    }
+    return DataRow(cells: row);
   }
 
   @override

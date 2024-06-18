@@ -11,7 +11,8 @@ import '../data/model/registro_model.dart';
 import '../data/model/tecnologias_model.dart';
 
 class IngesDevApi {
-  static const _uri = "https://apiinglesdev.azurewebsites.net/api";
+  // static const _uri = "https://apiinglesdev.azurewebsites.net/api";
+  static const _uri = "http://localhost:5015/api";
 
   static RegistroApi registro() => RegistroApi(baseUrl: "$_uri/Registro");
   static TestApi test() => TestApi(baseUrl: "$_uri/Test");
@@ -186,6 +187,39 @@ class Panel {
         'error': e.response?.data
       }));
       return null;
+    } catch (e) {
+      log(e.toString(), name: "calificar");
+      rethrow;
+    }
+  }
+
+  Future<bool> eliminarRegistro(int id) async {
+    try {
+      var headers = {'Content-Type': 'application/json'};
+      var request = http.Request('DELETE', Uri.parse('$baseUrl/elimar?id=$id'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      log(e.toString(), name: "calificar");
+
+      // ignore: avoid_print
+      print(json.encode(<String, dynamic>{
+        'message': e.message,
+        'uri': e.requestOptions.uri.toString(),
+        'statusCode': e.response?.statusCode,
+        'statusMessage': e.response?.statusMessage,
+        'data': e.requestOptions.data,
+        'error': e.response?.data
+      }));
+      return false;
     } catch (e) {
       log(e.toString(), name: "calificar");
       rethrow;
