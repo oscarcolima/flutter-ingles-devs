@@ -3,6 +3,7 @@ import 'package:flutter_ingles_devs/data/model/questions_model.dart';
 import 'package:flutter_ingles_devs/layout/panel_layout.dart';
 import 'package:flutter_ingles_devs/pages/panel/home/view/tabla_view/tabla_model.dart';
 import 'package:flutter_ingles_devs/pages/panel/home/view/tabla_view/tabla_view.dart';
+import 'package:flutter_ingles_devs/pages/panel/preguntas/view/show_pregunta_view.dart';
 import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 
 class PreguntasPage extends StatefulWidget {
@@ -53,7 +54,14 @@ class _PreguntasPageState extends State<PreguntasPage> {
             HeaderTable(nombre: "puntos negativos", fixedWidth: 150),
           ],
           body: data,
-          ver: (index) async {},
+          ver: (index) async {
+            showDialog(
+              context: context,
+              builder: (context) => ShowPreguntaView(
+                pregunta: preguntas[index],
+              ),
+            );
+          },
           eliminar: (index) async {},
           editar: (index) async {},
         ),
