@@ -17,6 +17,7 @@ class IngesDevApi {
   static RegistroApi registro() => RegistroApi(baseUrl: "$_uri/Registro");
   static TestApi test() => TestApi(baseUrl: "$_uri/Test");
   static Panel panel() => Panel(baseUrl: "$_uri/Panel");
+  static Preguntas pregunta() => Preguntas(baseUrl: "$_uri/Pregunta");
 }
 
 class RegistroApi {
@@ -147,9 +148,27 @@ class TestApi {
   }
 }
 
-class Panel {
-  // https://localhost:7263/api/Panel/getPanel
+class Preguntas {
+  final String baseUrl;
+  Preguntas({required this.baseUrl});
 
+  Future<List<QuestionsModel>?> getPreguntas() async {
+    try {
+      final dio = Dio();
+      final response = await dio.get('$baseUrl');
+      final questions = (response.data as List<dynamic>)
+          .map((e) => QuestionsModel.fromMap(e as Map<String, dynamic>))
+          .toList();
+
+      return questions;
+    } catch (e) {
+      log(e.toString(), name: "getquestions");
+    }
+    return null;
+  }
+}
+
+class Panel {
   final String baseUrl;
   Panel({
     required this.baseUrl,

@@ -81,12 +81,14 @@ class _PanelLayoutState extends State<PanelLayout> {
       child: Column(
         children: [
           Image.asset('assets/imgs/INGLES-PARA-DEVS_logo.png', width: 100),
-          SizedBox(height: 10),
+          SizedBox(height: 50),
           ListTile(
             title: Text("Registro"),
+            onTap: () => context.go("/"),
           ),
           ListTile(
             title: Text("Administrador de preguntas"),
+            onTap: () => context.go("/panel/preguntas"),
           ),
           Spacer(),
           ListTile(

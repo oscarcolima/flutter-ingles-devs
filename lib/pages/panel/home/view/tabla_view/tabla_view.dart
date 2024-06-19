@@ -1,9 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:data_table_2/data_table_2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_ingles_devs/widget/accion_button.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:flutter_ingles_devs/widget/accion_button.dart';
 
 import 'tabla_model.dart';
 
@@ -11,11 +15,15 @@ class TablaView extends StatefulWidget {
   final List<HeaderTable> headers;
   final List<List<CellBodyTable>> body;
   final Future<void> Function(int index)? eliminar;
+  final Future<void> Function(int index)? ver;
+  final Future<void> Function(int index)? editar;
   const TablaView({
     Key? key,
     required this.headers,
     required this.body,
     this.eliminar,
+    this.ver,
+    this.editar,
   }) : super(key: key);
 
   @override
@@ -55,7 +63,7 @@ class _TablaViewState extends State<TablaView> {
         sortColumnIndex: sortColumnIndex,
         sortAscending: sortAscending,
         columns: headers(),
-        source: SourceDataTable(body, eliminar: widget.eliminar),
+        source: SourceDataTable(body, eliminar: widget.eliminar,editar: widget.editar,ver: widget.ver)
       ),
     );
   }
@@ -88,7 +96,9 @@ class _TablaViewState extends State<TablaView> {
       );
     }
 
-    if (widget.eliminar != null) {
+    if (widget.eliminar != null ||
+        widget.editar != null ||
+        widget.ver != null) {
       aux.add(
         DataColumn2(
           label: Text(
@@ -142,10 +152,14 @@ class _TablaViewState extends State<TablaView> {
 class SourceDataTable extends DataTableSource {
   final List<List<CellBodyTable>> dataTable;
   final Future<void> Function(int index)? eliminar;
+  final Future<void> Function(int index)? editar;
+  final Future<void> Function(int index)? ver;
 
   SourceDataTable(
     this.dataTable, {
     this.eliminar,
+    this.editar,
+    this.ver,
   });
 
   @override
@@ -169,11 +183,33 @@ class SourceDataTable extends DataTableSource {
         )
         .toList();
 
-    if (eliminar != null) {
+    if (eliminar != null || editar != null || ver != null) {
       row.add(
         DataCell(
-          Column(
+          Row(
             children: [
+              if (ver != null)
+                AccionButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 15)),
+                  colorCircularProgress: Colors.white,
+                  onPressed: () async => await ver?.call(index),
+                  text: "Ver",
+                ),
+              if (editar != null)
+                AccionButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 15)),
+                  colorCircularProgress: Colors.white,
+                  onPressed: () async => await editar?.call(index),
+                  text: "Editar",
+                ),
               if (eliminar != null)
                 AccionButton(
                   style: ElevatedButton.styleFrom(

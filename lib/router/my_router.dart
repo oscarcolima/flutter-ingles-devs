@@ -1,6 +1,7 @@
 import 'package:flutter_ingles_devs/pages/nivel/nivel_page.dart';
 import 'package:flutter_ingles_devs/pages/panel/home/home_page.dart';
 import 'package:flutter_ingles_devs/pages/panel/login/login_page.dart';
+import 'package:flutter_ingles_devs/pages/panel/preguntas/preguntas_page.dart';
 import 'package:flutter_ingles_devs/pages/registro/registro_page.dart';
 import 'package:flutter_ingles_devs/pages/test/test_page.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,7 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) =>  const RegistroPage(),
+      builder: (context, state) => const RegistroPage(),
       routes: [
         GoRoute(
           path: 'panel',
@@ -31,7 +32,21 @@ final router = GoRouter(
 
                 return null;
               },
-            )
+            ),
+            GoRoute(
+              path: 'preguntas',
+              builder: (context, state) {
+                print("Pagina de pregutas");
+                return const PreguntasPage();
+              },
+              redirect: (context, state) {
+                print("Pagina de pregutas redireccion");
+                final box = Hive.box("sesion");
+                if (box.isEmpty) return "/panel/login";
+
+                return null;
+              },
+            ),
           ],
         ),
         GoRoute(
