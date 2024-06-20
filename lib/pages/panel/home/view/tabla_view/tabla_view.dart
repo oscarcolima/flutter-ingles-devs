@@ -5,15 +5,18 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ingles_devs/widget/accion_button_icon.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_ingles_devs/widget/accion_button.dart';
+import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
 
 import 'tabla_model.dart';
 
 class TablaView extends StatefulWidget {
   final List<HeaderTable> headers;
   final List<List<CellBodyTable>> body;
+  final double? dataRowHeight;
   final Future<void> Function(int index)? eliminar;
   final Future<void> Function(int index)? ver;
   final Future<void> Function(int index)? editar;
@@ -21,6 +24,7 @@ class TablaView extends StatefulWidget {
     Key? key,
     required this.headers,
     required this.body,
+    this.dataRowHeight,
     this.eliminar,
     this.ver,
     this.editar,
@@ -57,14 +61,18 @@ class _TablaViewState extends State<TablaView> {
     return Theme(
       data: tema,
       child: PaginatedDataTable2(
-        // minWidth: 500,
-        columnSpacing: 5,
-        horizontalMargin: 10,
-        sortColumnIndex: sortColumnIndex,
-        sortAscending: sortAscending,
-        columns: headers(),
-        source: SourceDataTable(body, eliminar: widget.eliminar,editar: widget.editar,ver: widget.ver)
-      ),
+          dataRowHeight: widget.dataRowHeight ?? kMinInteractiveDimension,
+          autoRowsToHeight: true,
+          // sortArrowAlwaysVisible:true,
+          columnSpacing: 5,
+          horizontalMargin: 10,
+          sortColumnIndex: sortColumnIndex,
+          sortAscending: sortAscending,
+          columns: headers(),
+          source: SourceDataTable(body,
+              eliminar: widget.eliminar,
+              editar: widget.editar,
+              ver: widget.ver)),
     );
   }
 
@@ -186,10 +194,10 @@ class SourceDataTable extends DataTableSource {
     if (eliminar != null || editar != null || ver != null) {
       row.add(
         DataCell(
-          Row(
+          Wrap(
             children: [
               if (ver != null)
-                AccionButton(
+                AccionButtonIcon(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
@@ -197,10 +205,10 @@ class SourceDataTable extends DataTableSource {
                           horizontal: 10, vertical: 15)),
                   colorCircularProgress: Colors.white,
                   onPressed: () async => await ver?.call(index),
-                  text: "Ver",
+                  icon: TDTxNFIcons.fromCLass("nf-md-eye"),
                 ),
               if (editar != null)
-                AccionButton(
+                AccionButtonIcon(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
@@ -208,10 +216,10 @@ class SourceDataTable extends DataTableSource {
                           horizontal: 10, vertical: 15)),
                   colorCircularProgress: Colors.white,
                   onPressed: () async => await editar?.call(index),
-                  text: "Editar",
+                  icon: TDTxNFIcons.fromCLass("nf-fa-edit"),
                 ),
               if (eliminar != null)
-                AccionButton(
+                AccionButtonIcon(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.redAccent,
                       foregroundColor: Colors.white,
@@ -219,7 +227,7 @@ class SourceDataTable extends DataTableSource {
                           horizontal: 10, vertical: 15)),
                   colorCircularProgress: Colors.white,
                   onPressed: () async => await eliminar?.call(index),
-                  text: "Eliminar",
+                  icon: TDTxNFIcons.fromCLass("nf-md-delete"),
                 )
             ],
           ),

@@ -11,6 +11,7 @@ class QuestionsModel {
   String type;
   int rightScore;
   int wrongScore;
+  bool eliminado;
   DateTime createat;
   DateTime updateat;
   List<AnswersModel>? answers;
@@ -20,32 +21,11 @@ class QuestionsModel {
     required this.type,
     required this.rightScore,
     required this.wrongScore,
+    required this.eliminado,
     required this.createat,
     required this.updateat,
     required this.answers,
   });
-
-  QuestionsModel copyWith({
-    int? id,
-    String? question,
-    String? type,
-    int? rightScore,
-    int? wrongScore,
-    DateTime? createat,
-    DateTime? updateat,
-    List<AnswersModel>? answers,
-  }) {
-    return QuestionsModel(
-      id: id ?? this.id,
-      question: question ?? this.question,
-      type: type ?? this.type,
-      rightScore: rightScore ?? this.rightScore,
-      wrongScore: wrongScore ?? this.wrongScore,
-      createat: createat ?? this.createat,
-      updateat: updateat ?? this.updateat,
-      answers: answers ?? this.answers,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -53,6 +33,7 @@ class QuestionsModel {
       'question': question,
       'type': type,
       'rightScore': rightScore,
+      'eliminado': eliminado,
       'wrongScore': wrongScore,
       'create_at': createat.toIso8601String(),
       'update_at': updateat.toIso8601String(),
@@ -65,9 +46,10 @@ class QuestionsModel {
       id: map['id'] as int,
       question: map['question'] as String,
       type: map['type'] as String,
+      eliminado: map['eliminado'] as bool,
       rightScore: map['rightScore'] as int,
       wrongScore: map['wrongScore'] as int,
-      createat: DateTime.parse(map['create_at'] ),
+      createat: DateTime.parse(map['create_at']),
       updateat: DateTime.parse(map['update_at']),
       answers: map['answers'] != null
           ? List<AnswersModel>.from(
