@@ -11,8 +11,7 @@ import '../data/model/registro_model.dart';
 import '../data/model/tecnologias_model.dart';
 
 class IngesDevApi {
-  // static const _uri = "https://apiinglesdev.azurewebsites.net/api";
-  static const _uri = "http://localhost:5015/api";
+  static const _uri = String.fromEnvironment("API");
 
   static RegistroApi registro() => RegistroApi(baseUrl: "$_uri/Registro");
   static TestApi test() => TestApi(baseUrl: "$_uri/Test");
@@ -211,6 +210,33 @@ class Preguntas {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 204) {
+        return true;
+      } else {
+        // print(response.statusMessage);
+        return false;
+      }
+    } on ClientException catch (e) {
+      log(e.toString(), name: "Editar Pregunta");
+
+      // ignore: avoid_print
+      print(json.encode(<String, dynamic>{'message': e.message, 'uri': e.uri}));
+      return false;
+    } catch (e) {
+      log(e.toString(), name: "Editar Pregunta");
+      rethrow;
+    }
+  }
+  Future<bool> crearPregunta( QuestionsModel question) async {
+    try {
+      var headers = {'Content-Type': 'application/json'};
+      var request =
+          http.Request('POST', Uri.parse('$baseUrl/crear'));
+      request.body = json.encode(question.toMap());
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
         return true;
       } else {
         // print(response.statusMessage);
