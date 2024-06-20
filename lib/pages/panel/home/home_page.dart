@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
                     headers: headers(sizeScreen),
                     body: dataTable?.map((e) => row(sizeScreen, e)).toList() ??
                         [],
+                    eliminar: eliminar,
                   ),
                 ),
               ],
@@ -143,5 +144,17 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       dataTable = _dataTable;
     });
+  }
+
+  Future<void> eliminar(int index) async {
+    final id = dataTable![index].id;
+    final panl = IngesDevApi.panel();
+    final elimiaado = await panl.eliminarRegistro(id!);
+    if (elimiaado) {
+      setState(() {
+        dataTable!.removeAt(index);
+      });
+    }
+    
   }
 }

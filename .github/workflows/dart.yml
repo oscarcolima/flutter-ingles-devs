@@ -1,10 +1,8 @@
 name: Build and Release Flutter Web App
-
 on:
   push:
-    tags:
-      - 'v*.*.*' # Ejecuta el workflow cuando se empuja un nuevo tag que siga el formato v1.2.3
-
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
