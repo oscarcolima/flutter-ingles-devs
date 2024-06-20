@@ -8,6 +8,7 @@ import 'package:flutter_ingles_devs/pages/panel/preguntas/view/crear_pregunta_vi
 import 'package:flutter_ingles_devs/pages/panel/preguntas/view/show_pregunta_view.dart';
 import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'view/editar_pregunta_view.dart';
@@ -21,11 +22,14 @@ class PreguntasPage extends StatefulWidget {
 
 class _PreguntasPageState extends State<PreguntasPage> {
   late List<QuestionsModel> preguntas = [];
+  bool loading = true;
   @override
   void initState() {
     IngesDevApi.pregunta().getPreguntas().then((value) {
-      preguntas = value ?? [];
-      setState(() {});
+      setState(() {
+        preguntas = value ?? [];
+        loading = false;
+      });
     });
 
     super.initState();
@@ -53,13 +57,35 @@ class _PreguntasPageState extends State<PreguntasPage> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: TablaView(
-                headers: headers(sizeScreen),
-                body: preguntas.map((e) => row(sizeScreen, e)).toList(),
-                ver: [0, 1].contains(sizeScreen.index) ? null : ver,
-                eliminar: [0, 1].contains(sizeScreen.index) ? null : eliminar,
-                editar: [0, 1].contains(sizeScreen.index) ? null : editar,
-              ),
+              child: loading
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircularProgressIndicator(
+                            color: Color.fromRGBO(0, 31, 94, 1),
+                          ),
+                          Text(
+                            "Cargando datos",
+                            style: GoogleFonts.getFont(
+                              'Poppins',
+                              color: const Color.fromRGBO(0, 31, 94, 1),
+                              fontSize:
+                                  [0, 1].contains(sizeScreen.index) ? 16 : 24,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : TablaView(
+                      headers: headers(sizeScreen),
+                      body: preguntas.map((e) => row(sizeScreen, e)).toList(),
+                      ver: [0, 1].contains(sizeScreen.index) ? null : ver,
+                      eliminar:
+                          [0, 1].contains(sizeScreen.index) ? null : eliminar,
+                      editar: [0, 1].contains(sizeScreen.index) ? null : editar,
+                    ),
             ),
           ),
         ],
@@ -70,28 +96,28 @@ class _PreguntasPageState extends State<PreguntasPage> {
   List<HeaderTable> headers(SizeScreen sizeScreen) {
     return switch (sizeScreen) {
       SizeScreen.xs => [
-          HeaderTable(nombre: "#", orden: true, fixedWidth: 100),
+          HeaderTable(nombre: "#", numeric: true, orden: true, fixedWidth: 100),
           HeaderTable(nombre: "pregunta"),
           HeaderTable(nombre: "puntos correctos", fixedWidth: 150),
         ],
       SizeScreen.sm => [
-          HeaderTable(nombre: "#", orden: true, fixedWidth: 100),
+          HeaderTable(nombre: "#", numeric: true, orden: true, fixedWidth: 100),
           HeaderTable(nombre: "pregunta"),
           HeaderTable(nombre: "puntos correctos", fixedWidth: 150),
         ],
       SizeScreen.md => [
-          HeaderTable(nombre: "#", orden: true, fixedWidth: 100),
+          HeaderTable(nombre: "#", numeric: true, orden: true, fixedWidth: 100),
           HeaderTable(nombre: "pregunta"),
           HeaderTable(nombre: "puntos correctos", fixedWidth: 150),
         ],
       SizeScreen.lg => [
-          HeaderTable(nombre: "#", orden: true, fixedWidth: 100),
+          HeaderTable(nombre: "#", numeric: true, orden: true, fixedWidth: 100),
           HeaderTable(nombre: "pregunta"),
           HeaderTable(nombre: "respuesta"),
           HeaderTable(nombre: "puntos correctos", fixedWidth: 150),
         ],
       _ => [
-          HeaderTable(nombre: "#", orden: true, fixedWidth: 100),
+          HeaderTable(nombre: "#", numeric: true, orden: true, fixedWidth: 100),
           HeaderTable(nombre: "pregunta"),
           HeaderTable(nombre: "respuesta"),
           HeaderTable(nombre: "puntos correctos", fixedWidth: 150),

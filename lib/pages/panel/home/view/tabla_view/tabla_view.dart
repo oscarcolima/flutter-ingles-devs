@@ -95,6 +95,7 @@ class _TablaViewState extends State<TablaView> {
 
       aux.add(
         DataColumn2(
+          numeric: row.numeric,
           fixedWidth: row.fixedWidth,
           label: label,
           onSort: !row.orden ? null : orderBy,
@@ -132,20 +133,6 @@ class _TablaViewState extends State<TablaView> {
       auxDataTable
           .sort((a, b) => a[columnIndex].data.compareTo(b[columnIndex].data));
     }
-
-    // auxDataTable?.sort((a, b) {
-    //   final aa = a.score ?? -1;
-    //   final bb = b.score ?? -1;
-
-    //   int compare = 0;
-    //   if (ascending) {
-    //     compare = bb.compareTo(aa);
-    //   } else {
-    //     compare = aa.compareTo(bb);
-    //   }
-
-    //   return compare;
-    // });
 
     setState(() {
       sortAscending = ascending;
@@ -232,6 +219,7 @@ class SourceDataTable extends DataTableSource {
         ),
       );
     }
+
     return DataRow(cells: row);
   }
 
