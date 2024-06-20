@@ -227,6 +227,33 @@ class Preguntas {
       rethrow;
     }
   }
+  Future<bool> crearPregunta( QuestionsModel question) async {
+    try {
+      var headers = {'Content-Type': 'application/json'};
+      var request =
+          http.Request('POST', Uri.parse('$baseUrl/crear'));
+      request.body = json.encode(question.toMap());
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        // print(response.statusMessage);
+        return false;
+      }
+    } on ClientException catch (e) {
+      log(e.toString(), name: "Editar Pregunta");
+
+      // ignore: avoid_print
+      print(json.encode(<String, dynamic>{'message': e.message, 'uri': e.uri}));
+      return false;
+    } catch (e) {
+      log(e.toString(), name: "Editar Pregunta");
+      rethrow;
+    }
+  }
 }
 
 class Panel {

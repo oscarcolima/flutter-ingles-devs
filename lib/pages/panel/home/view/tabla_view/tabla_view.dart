@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:math';
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_ingles_devs/widget/accion_button_icon.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:flutter_ingles_devs/widget/accion_button.dart';
 import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
 
 import 'tabla_model.dart';

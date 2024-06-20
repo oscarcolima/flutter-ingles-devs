@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_ingles_devs/data/model/answers_model.dart';
 
 class QuestionsModel {
-  int id;
+  int? id;
   String question;
   String type;
   int rightScore;
@@ -16,7 +16,7 @@ class QuestionsModel {
   DateTime updateat;
   List<AnswersModel>? answers;
   QuestionsModel({
-    required this.id,
+     this.id,
     required this.question,
     required this.type,
     required this.rightScore,

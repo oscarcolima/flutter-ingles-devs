@@ -88,7 +88,7 @@ class _EditarPreguntaViewState extends State<EditarPreguntaView> {
             onPressed: () {
               _keyForm.currentState!.save();
 
-              IngesDevApi.pregunta().editarPregunta(pregunta.id, pregunta);
+              IngesDevApi.pregunta().editarPregunta(pregunta.id!, pregunta);
               print(json.encode(pregunta.toMap()));
               context.pop(pregunta);
             },

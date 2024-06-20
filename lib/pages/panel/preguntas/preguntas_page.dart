@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_ingles_devs/data/model/questions_model.dart';
 import 'package:flutter_ingles_devs/layout/panel_layout.dart';
 import 'package:flutter_ingles_devs/pages/panel/home/view/tabla_view/tabla_model.dart';
 import 'package:flutter_ingles_devs/pages/panel/home/view/tabla_view/tabla_view.dart';
+import 'package:flutter_ingles_devs/pages/panel/preguntas/view/crear_pregunta_view%20copy.dart';
 import 'package:flutter_ingles_devs/pages/panel/preguntas/view/show_pregunta_view.dart';
 import 'package:flutter_ingles_devs/repository/inges_dev_api.dart';
 import 'package:flutter_ingles_devs/widget/responsive_app.dart';
@@ -34,32 +36,33 @@ class _PreguntasPageState extends State<PreguntasPage> {
     final sizeScreen = context
         .select<ResponsiveApp, SizeScreen>((ResponsiveApp p) => p.sizeScreen);
 
-    print(sizeScreen);
-    final data = preguntas
-        .map(
-          (e) => [
-            CellBodyTable(data: e.id.toString()),
-            CellBodyTable(data: e.question),
-            CellBodyTable(
-                data: e.answers!
-                    .firstWhere((element) => element.iscorrect)
-                    .answer),
-            CellBodyTable(data: e.rightScore.toString()),
-            CellBodyTable(data: e.wrongScore.toString()),
-          ],
-        )
-        .toList();
-
     return PanelLayout(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        child: TablaView(
-          headers: headers(sizeScreen),
-          body: preguntas.map((e) => row(sizeScreen, e)).toList(),
-          ver: [0, 1].contains(sizeScreen.index) ? null : ver,
-          eliminar: [0, 1].contains(sizeScreen.index) ? null : eliminar,
-          editar: [0, 1].contains(sizeScreen.index) ? null : editar,
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white),
+                onPressed: crear,
+                icon: const Icon(Icons.add),
+                label: const Text("Crear Pregunta")),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              child: TablaView(
+                headers: headers(sizeScreen),
+                body: preguntas.map((e) => row(sizeScreen, e)).toList(),
+                ver: [0, 1].contains(sizeScreen.index) ? null : ver,
+                eliminar: [0, 1].contains(sizeScreen.index) ? null : eliminar,
+                editar: [0, 1].contains(sizeScreen.index) ? null : editar,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -142,7 +145,7 @@ class _PreguntasPageState extends State<PreguntasPage> {
   }
 
   Future<void> eliminar(int index) async {
-    final id = preguntas[index].id;
+    final id = preguntas[index].id!;
     final preguntaApi = IngesDevApi.pregunta();
     final elimiaado = await preguntaApi.eliminarPregunta(id);
     if (elimiaado) {
@@ -163,6 +166,19 @@ class _PreguntasPageState extends State<PreguntasPage> {
     if (newquestion != null) {
       setState(() {
         preguntas[index] = newquestion;
+      });
+    }
+  }
+
+  Future<void> crear() async {
+    final newquestion = await showDialog<QuestionsModel?>(
+      context: context,
+      builder: (context) => const CrearPreguntaView(),
+    );
+
+    if (newquestion != null) {
+      setState(() {
+        preguntas.add(newquestion);
       });
     }
   }
