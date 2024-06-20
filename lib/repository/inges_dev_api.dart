@@ -11,8 +11,6 @@ import '../data/model/registro_model.dart';
 import '../data/model/tecnologias_model.dart';
 
 class IngesDevApi {
-  // static const _uri = "https://apiinglesdev.azurewebsites.net/api";
-  // static const _uri = "http://localhost:5015/api";
   static const _uri = String.fromEnvironment("API");
 
   static RegistroApi registro() => RegistroApi(baseUrl: "$_uri/Registro");
