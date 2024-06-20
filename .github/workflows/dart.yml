@@ -1,0 +1,51 @@
+name: Build and Release Flutter Web App
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Ejecuta el workflow cuando se empuja un nuevo tag que siga el formato v1.2.3
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build Flutter web
+      run: flutter build web
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: flutter-web-build
+        path: build/web/
+
+  create_release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: flutter-web-build
+        path: build/web/
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/web/**
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
