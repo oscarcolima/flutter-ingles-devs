@@ -74,7 +74,7 @@ class _FormularioState extends State<Formulario> {
 
   void login() {
     if (_keyForm.currentState!.validate()) {
-      if (userControler.text == "admin" && passControler.text == "admin123") {
+      if (userControler.text == "admin" && passControler.text == "KwiK46bFnif4TLkzr26vKGNAAhFznun6") {
         final box = Hive.box("sesion");
         box.putAll({'user': userControler.text, 'pass': passControler.text});
         context.replace("/panel");
