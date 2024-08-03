@@ -19,7 +19,16 @@ class PreguntaWidget extends StatefulWidget {
 
 class _PreguntaWidgetState extends State<PreguntaWidget> {
   int? select;
-  
+  late String pregunta;
+  late List<String> respuestas;
+
+  @override
+  void initState() {
+    pregunta = widget.pregunta;
+    respuestas = widget.respuestas;
+    super.initState();
+  }
+
   @override
   void didUpdateWidget(PreguntaWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -28,7 +37,8 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+   
+   return Container(
       padding: const EdgeInsets.only(top: 50, bottom: 30),
       decoration: const BoxDecoration(
         border: Border(
@@ -48,7 +58,7 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
 
   List<Widget> generarPregunta() {
     return {
-      for (int i = 0; i < widget.respuestas.length; i++)
+      for (int i = 0; i < respuestas.length; i++)
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
@@ -64,7 +74,7 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
                   : const Icon(Icons.check_circle_outlined,
                       color: Color(0xff0D6EFD)),
               title: Text(
-                widget.respuestas[i],
+                respuestas[i],
                 style: GoogleFonts.getFont(
                   'Open Sans',
                   fontSize: 14,
@@ -107,7 +117,7 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
         ),
         const SizedBox(width: 25),
         Text(
-          widget.pregunta,
+          pregunta,
           style: GoogleFonts.getFont(
             'Open Sans',
             fontSize: 16,

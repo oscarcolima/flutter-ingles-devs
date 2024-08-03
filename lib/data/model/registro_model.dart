@@ -12,6 +12,7 @@ class RegistroModel {
   late int? score;
   late int? correctaAnswers;
   late String? level;
+  late bool eliminado;
   RegistroModel({
     this.id = 0,
     this.nombreCompleto = "",
@@ -23,6 +24,7 @@ class RegistroModel {
     this.score,
     this.correctaAnswers,
     this.level,
+    this.eliminado = false,
   });
 
   RegistroModel copyWith({
@@ -63,6 +65,7 @@ class RegistroModel {
       'score': score,
       'correct_answers': correctaAnswers,
       'level': level,
+      'eliminado': eliminado,
     };
   }
 
@@ -79,6 +82,7 @@ class RegistroModel {
       correctaAnswers:
           map['correct_answers'] != null ? map['correct_answers'] as int : null,
       level: map['level'] != null ? map['level'] as String : null,
+      eliminado: map['eliminado'] != null ? map['eliminado'] as bool : false,
     );
   }
 

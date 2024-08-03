@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ingles_devs/data/model/answers_model.dart';
 import 'package:flutter_ingles_devs/data/model/questions_model.dart';
 import 'package:flutter_ingles_devs/data/model/registro_model.dart';
 import 'package:flutter_ingles_devs/layout/principal_layout.dart';
@@ -25,8 +26,14 @@ class _TestPageState extends State<TestPage> {
   }
 
   List<QuestionsModel>? questions;
+  List<AnswersModel?> answers = [];
+
   void getQuestions() async {
     questions = await IngesDevApi.test().getquestions() ?? [];
+    answers = List.generate(
+      questions?.length ?? 0,
+      (index) => null,
+    );
     gnenrarLista();
     setState(() {});
   }
@@ -49,7 +56,9 @@ class _TestPageState extends State<TestPage> {
         pregunta: q.question,
         respuestas: a,
         res: (res) {
-          questions![i + start - 1].answers = [q.answers![res]];
+          final index0 = i + start - 1;
+          final respuesta = q.answers![res];
+          answers[index0] = respuesta; // = [respuesta];
         },
       ));
     }
@@ -108,7 +117,7 @@ class _TestPageState extends State<TestPage> {
     complet = true;
 
     for (int i = start; i < terminar; i++) {
-      if (questions![i].answers?.length != 1) {
+      if (answers[i] == null) {
         complet = false;
         break;
       }
@@ -171,11 +180,8 @@ class _TestPageState extends State<TestPage> {
 
     bool complet = true;
 
-    for (var element in questions!) {
-      if (element.answers?.length != 1) {
-        complet = false;
-        break;
-      }
+    for (var i = 0; i < (questions?.length ?? 0); i++) {
+      questions?[i].answers = [answers[i]!];
     }
 
     if (complet) {
