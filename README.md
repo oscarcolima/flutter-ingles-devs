@@ -2,7 +2,7 @@ para compilar usar el siguinte comando
 ```sh
 flutter build web \
 --dart-define API=https://apiinglesdev.azurewebsites.net/api \
---base-href /assets3/ 
+--base-href /assessment_v3/ 
 ```
 > con el parametro  `--dart-define` definiremos una variable en este caso es API la cual tiene de valor la url de la api a consumir.
 >

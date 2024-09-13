@@ -79,20 +79,20 @@ class _FormularioState extends State<Formulario> {
         box.putAll({'user': userControler.text, 'pass': passControler.text});
         context.replace("/panel");
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-            "Usuario no valido",
-            style: GoogleFonts.getFont('Poppins', fontWeight: FontWeight.w700),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          margin: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height - 100,
-              right: 20,
-              left: 20),
-        ));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              "Usuario no valido",
+              style: GoogleFonts.getFont('Poppins', fontWeight: FontWeight.w700),
+            ),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height - 100,
+                right: 20,
+                left: 20),
+          ));
       }
     }
   }
