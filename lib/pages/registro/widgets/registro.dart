@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:tdtx_nf_icons/tdtx_nf_icons.dart';
-import 'package:tdtxle_data_format/formatter/number_formatter.dart';
 import 'package:tdtxle_data_format/formatter/phone_input_formatter.dart';
 
 class Registro extends StatefulWidget {
@@ -54,6 +53,18 @@ class _RegistroState extends State<Registro> {
       fontWeight: FontWeight.w400,
     );
 
+    final List<String> _countryCodes = [
+      '+52', // México
+      '+54', // Argentina
+      '+56', // Chile
+      '+57', // Colombia
+      '+58', // Venezuela
+      '+51', // Perú
+    ];
+    const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+    String _selectedCode = '+52';
+    String _experiencia = '0';
+
     return Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: Card(
@@ -73,7 +84,7 @@ class _RegistroState extends State<Registro> {
                 const SizedBox(height: 35),
                 TextFormField(
                   style: inputStyle,
-                  decoration: textFieldDecoration("Nombre Completo"),
+                  decoration: textFieldDecoration("Nombre completo"),
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
                       return "Complete el compo";
@@ -117,47 +128,129 @@ class _RegistroState extends State<Registro> {
                   },
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  style: inputStyle,
-                  inputFormatters: [PhoneInputFormatter()],
-                  validator: (value) {
-                    if ((value ?? "").isEmpty) {
-                      return "Complete el compo";
-                    }
-                    if (int.tryParse(value?.replaceAll('-', '') ?? "") ==
-                        null) {
-                      return "Selo numero";
-                    }
+                Row(
+                  children: [
+                    // Dropdown for country code
+                    Flexible(
+                      flex: 3, // 20% del ancho total
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedCode,
+                        onChanged: (String? newValue) {
+                          registro.codigoPais != newValue;
+                          setState(() {
+                            _selectedCode = newValue!;
+                          });
+                        },
+                        items: [
+                          {'code': '+52', 'flag': 'mx'}, // México
+                          {'code': '+54', 'flag': 'ar'}, // Argentina
+                          {'code': '+56', 'flag': 'cl'}, // Chile
+                          {'code': '+57', 'flag': 'co'}, // Colombia
+                          {'code': '+58', 'flag': 've'}, // Venezuela
+                          {'code': '+51', 'flag': 'pe'}, // Perú
+                          {'code': '+503', 'flag': 'sv'}, // El Salvador
+                          {'code': '+502', 'flag': 'gt'}, // Guatemala
+                          {'code': '+505', 'flag': 'ni'}, // Nicaragua
+                          {'code': '+506', 'flag': 'cr'}, // Costa Rica
+                          {'code': '+507', 'flag': 'pa'}, // Panamá
+                          {'code': '+593', 'flag': 'ec'}, // Ecuador
+                          {'code': '+591', 'flag': 'bo'}, // Bolivia
+                          {'code': '+598', 'flag': 'uy'}, // Uruguay
+                          {'code': '+595', 'flag': 'py'}, // Paraguay
+                          {'code': '+53', 'flag': 'cu'}, // Cuba
+                          {
+                            'code': '+809',
+                            'flag': 'do'
+                          }, // República Dominicana
+                          {'code': '+787', 'flag': 'pr'}, // Puerto Rico
+                        ].map((Map<String, String> country) {
+                          return DropdownMenuItem<String>(
+                            value: country['code'],
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/flags/${country['flag']}.png',
+                                  width: 24,
+                                  height: 16,
+                                  fit: BoxFit.cover,
+                                ), // Imagen de la bandera
+                                const SizedBox(
+                                    width:
+                                        8), // Espaciado entre bandera y código
+                                Text(country['code'] ?? ''), // Código del país
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Código',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                        width: 10), // Spacing between dropdown and text field
+                    // Text field for phone number
+                    Flexible(
+                      flex: 7, // 80% of the row
+                      child: TextFormField(
+                        style: inputStyle,
+                        inputFormatters: [PhoneInputFormatter()],
+                        validator: (value) {
+                          if ((value ?? "").isEmpty) {
+                            return "Complete el compo";
+                          }
+                          if (int.tryParse(value?.replaceAll('-', '') ?? "") ==
+                              null) {
+                            return "Solo numeros";
+                          }
 
-                    if ((value?.replaceAll('-', '') ?? "").length != 10) {
-                      return "telefono no valido";
-                    }
+                          if ((value?.replaceAll('-', '') ?? "").length != 10) {
+                            return "Teléfono no valido";
+                          }
 
-                    registro.telefono = value!;
-                    return null;
-                  },
-                  decoration: textFieldDecoration("Telefono"),
+                          registro.telefono = value!;
+                          return null;
+                        },
+                        decoration: textFieldDecoration("Teléfono"),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  style: inputStyle,
-                  inputFormatters: [NumberFormatter()],
+                DropdownButtonFormField<String>(
+                  value: _experiencia,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      registro.experiencia =
+                          newValue == "20" ? ">20" : newValue; // Manejar ">20"
+                      setState(() {
+                        _experiencia = newValue;
+                      });
+                    }
+                  },
+                  items: List<DropdownMenuItem<String>>.generate(
+                    21, // Generar números del 1 al 20
+                    (index) {
+                      final value = index;
+                      return DropdownMenuItem<String>(
+                        value: value.toString(),
+                        child: Text(value == 20
+                            ? '>20'
+                            : value.toString()), // Cambiar el texto para 20
+                      );
+                    },
+                  ),
                   validator: (value) {
-                    if ((value ?? "").isEmpty) {
-                      return "Complete el compo";
+                    if (value == null) {
+                      return "Seleccione un valor";
                     }
-                    if (int.tryParse(value ?? "") == null) {
-                      return "Selo numero";
-                    }
-                    if (int.parse(value!) > 100) {
-                      return "valor no valido";
-                    }
-
-                    registro.experiencia = int.parse(value);
                     return null;
                   },
-                  decoration: textFieldDecoration(
-                      "¿Cuántos años de experiencia tienes?"),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "¿Cuántos años de experiencia tienes?",
+                  ),
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField(
@@ -236,6 +329,7 @@ class _RegistroState extends State<Registro> {
   void registrar() async {
     if (_keyForm.currentState!.validate()) {
       try {
+        //http://localhost:5015/api/Registro/tecnologias
 
         final newRegistro = await IngesDevApi.registro().registrar(registro);
         if (newRegistro != null) {
@@ -248,7 +342,9 @@ class _RegistroState extends State<Registro> {
         // ignore: avoid_print, use_build_context_synchronously
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
             content: Text(e.toString()),
-            actions: [TextButton(onPressed: () {}, child: const Text("hola"))]));
+            actions: [
+              TextButton(onPressed: () {}, child: const Text("hola"))
+            ]));
         // ignore: avoid_print
         print(e);
       }

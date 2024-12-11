@@ -41,6 +41,7 @@ class RegistroApi {
 
   Future<RegistroModel?> registrar(RegistroModel registro) async {
     try {
+      registro.telefono = registro.codigoPais + registro.telefono;
       var headers = {'Content-Type': 'application/json'};
       var request = http.Request('POST', Uri.parse('$baseUrl/registrar'));
       request.body = registro.toJson();
@@ -226,11 +227,11 @@ class Preguntas {
       rethrow;
     }
   }
-  Future<bool> crearPregunta( QuestionsModel question) async {
+
+  Future<bool> crearPregunta(QuestionsModel question) async {
     try {
       var headers = {'Content-Type': 'application/json'};
-      var request =
-          http.Request('POST', Uri.parse('$baseUrl/crear'));
+      var request = http.Request('POST', Uri.parse('$baseUrl/crear'));
       request.body = json.encode(question.toMap());
       request.headers.addAll(headers);
 

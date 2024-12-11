@@ -5,9 +5,10 @@ class RegistroModel {
   late int? id;
   late String nombreCompleto;
   late String telefono;
+  late String codigoPais;
   late String email;
   late String profesion;
-  late int experiencia;
+  late String experiencia;
   late int technology;
   late int? score;
   late int? correctaAnswers;
@@ -19,7 +20,7 @@ class RegistroModel {
     this.telefono = "",
     this.email = "",
     this.profesion = "",
-    this.experiencia = 0,
+    this.experiencia = "0",
     this.technology = 0,
     this.score,
     this.correctaAnswers,
@@ -33,7 +34,7 @@ class RegistroModel {
     String? telefono,
     String? email,
     String? profesion,
-    int? experiencia,
+    String? experiencia,
     int? technology,
     int? score,
     int? correctaAnswers,
@@ -76,7 +77,7 @@ class RegistroModel {
       telefono: map['telefono'] as String,
       email: map['email'] as String,
       profesion: map['profesion'] as String,
-      experiencia: map['experiencia'] as int,
+      experiencia: map['experiencia'] as String,
       technology: map['fk_technology'] as int,
       score: map['score'] != null ? map['score'] as int : null,
       correctaAnswers:

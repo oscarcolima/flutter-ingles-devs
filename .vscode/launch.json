@@ -14,16 +14,20 @@
             ]
         },
         {
-            "name": "flutter_ingles_devs (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "flutter_ingles_devs (release mode)",
+            "name": "profile_ingles_devs (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",
+            "toolArgs": [
+                "--dart-define",
+                "API=https://apiinglesdev.azurewebsites.net/api"
+            ]
+        },
+        {
+            "name": "debug_ingles_devs (debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
             "toolArgs": [
                 "--dart-define",
                 "API=https://apiinglesdev.azurewebsites.net/api"
