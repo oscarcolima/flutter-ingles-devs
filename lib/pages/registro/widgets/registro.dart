@@ -87,7 +87,7 @@ class _RegistroState extends State<Registro> {
                   decoration: textFieldDecoration("Nombre completo"),
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
-                      return "Complete el compo";
+                      return "Complete el campo";
                     }
 
                     registro.nombreCompleto = value!;
@@ -100,7 +100,7 @@ class _RegistroState extends State<Registro> {
                   decoration: textFieldDecoration("Correo electrónico"),
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
-                      return "Complete el compo";
+                      return "Complete el campo";
                     }
 
                     // Validación con expresión regular
