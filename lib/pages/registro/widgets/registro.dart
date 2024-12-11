@@ -271,17 +271,21 @@ class _RegistroState extends State<Registro> {
                   },
                 ),
                 const SizedBox(height: 20),
-                FilledButton(
-                  style: FilledButton.styleFrom(
+                SizedBox(
+                  width: double.infinity, // Ocupa todo el ancho disponible
+                  child: FilledButton(
+                    style: FilledButton.styleFrom(
                       backgroundColor: const Color.fromRGBO(0, 31, 94, 1),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8)),
-                  onPressed: registrar,
-                  child: const Text("Empezar test"),
+                          horizontal: 16, vertical: 8),
+                    ),
+                    onPressed: registrar,
+                    child: const Text("Comenzar"),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  "Al hacer clic en “Comenzar”acepto el uso de mis datos personales de acuerdo con la Política de Privacidad y recibir las últimas noticias, ofertas e información sobre lInglés para Devs por email.",
+                  "Al hacer clic en “Comenzar” acepto el uso de mis datos personales de acuerdo con la Política de Privacidad y recibir las últimas noticias, ofertas e información sobre lInglés para Devs por email.",
                   style: GoogleFonts.getFont(
                     'Poppins',
                     fontSize: 10,
