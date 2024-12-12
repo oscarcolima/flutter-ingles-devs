@@ -14,6 +14,8 @@ class RegistroModel {
   late int? correctaAnswers;
   late String? level;
   late bool eliminado;
+  late DateTime date;
+
   RegistroModel({
     this.id = 0,
     this.nombreCompleto = "",
@@ -27,7 +29,8 @@ class RegistroModel {
     this.correctaAnswers,
     this.level,
     this.eliminado = false,
-  });
+    DateTime? date,
+  }) : date = date ?? DateTime.now();
 
   RegistroModel copyWith({
     int? id,
@@ -70,6 +73,7 @@ class RegistroModel {
       'correct_answers': correctaAnswers,
       'level': level,
       'eliminado': eliminado,
+      'date': date.toIso8601String(),
     };
   }
 
@@ -87,6 +91,7 @@ class RegistroModel {
           map['correct_answers'] != null ? map['correct_answers'] as int : null,
       level: map['level'] != null ? map['level'] as String : null,
       eliminado: map['eliminado'] != null ? map['eliminado'] as bool : false,
+      date: DateTime.parse(map['date'] as String),
     );
   }
 

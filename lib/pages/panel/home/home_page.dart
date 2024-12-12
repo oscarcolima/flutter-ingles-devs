@@ -63,31 +63,32 @@ class _HomePageState extends State<HomePage> {
     return switch (sizeScreen) {
       SizeScreen.xs => [
           HeaderTable(fixedWidth: 100, nombre: "#", orden: true),
-          HeaderTable(nombre: "nombre"),
+          HeaderTable(nombre: "Nombre"),
           HeaderTable(fixedWidth: 100, nombre: "nivel", orden: true),
         ],
       SizeScreen.sm => [
           HeaderTable(fixedWidth: 100, nombre: "#", orden: true),
-          HeaderTable(nombre: "nombre"),
-          HeaderTable(nombre: "teléfono"),
-          HeaderTable(nombre: "correo"),
+          HeaderTable(nombre: "Nombre"),
+          HeaderTable(nombre: "Teléfono"),
+          HeaderTable(nombre: "Correo"),
           HeaderTable(fixedWidth: 100, nombre: "nivel", orden: true),
         ],
       SizeScreen.lg => [
           HeaderTable(fixedWidth: 100, nombre: "#", orden: true),
-          HeaderTable(nombre: "nombre"),
-          HeaderTable(nombre: "teléfono"),
-          HeaderTable(nombre: "correo"),
+          HeaderTable(nombre: "Nombre"),
+          HeaderTable(nombre: "Teléfono"),
+          HeaderTable(nombre: "Correo"),
           HeaderTable(fixedWidth: 100, nombre: "nivel", orden: true),
         ],
       _ => [
           HeaderTable(fixedWidth: 100, nombre: "#", orden: true),
-          HeaderTable(nombre: "nombre"),
-          HeaderTable(nombre: "teléfono"),
-          HeaderTable(nombre: "correo"),
-          HeaderTable(fixedWidth: 110, nombre: "puntaje", orden: true),
-          HeaderTable(fixedWidth: 110, nombre: "aciertos", orden: true),
-          HeaderTable(fixedWidth: 100, nombre: "nivel", orden: true),
+          HeaderTable(nombre: "Nombre"),
+          HeaderTable(nombre: "Teléfono"),
+          HeaderTable(nombre: "Correo"),
+          HeaderTable(fixedWidth: 110, nombre: "Puntaje", orden: true),
+          HeaderTable(fixedWidth: 110, nombre: "Aciertos", orden: true),
+          HeaderTable(fixedWidth: 100, nombre: "Nivel", orden: true),
+          HeaderTable(fixedWidth: 100, nombre: "Fecha", orden: true),
         ]
     };
   }
@@ -121,6 +122,7 @@ class _HomePageState extends State<HomePage> {
           CellBodyTable(data: registro.score?.toString() ?? ""),
           CellBodyTable(data: registro.correctaAnswers?.toString() ?? ""),
           CellBodyTable(data: registro.level?.toString() ?? ""),
+          CellBodyTable(data: registro.date.toString().substring(0, 16)),
         ]
     };
   }
@@ -155,6 +157,5 @@ class _HomePageState extends State<HomePage> {
         dataTable!.removeAt(index);
       });
     }
-    
   }
 }

@@ -106,12 +106,13 @@ class _FiltroViewState extends State<FiltroView> {
           0,
           [
             const TextCellValue("#"),
-            const TextCellValue("nombre"),
-            const TextCellValue("teléfono"),
-            const TextCellValue("correo"),
-            const TextCellValue("puntaje"),
-            const TextCellValue("aciertos"),
-            const TextCellValue("nivel"),
+            const TextCellValue("Nombre"),
+            const TextCellValue("Teléfono"),
+            const TextCellValue("Correo"),
+            const TextCellValue("Puntaje"),
+            const TextCellValue("Aciertos"),
+            const TextCellValue("Nivel"),
+            const TextCellValue("Fecha"),
           ].toList());
 
       excel.crearHoja("Cursos", rows);
