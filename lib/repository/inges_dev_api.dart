@@ -41,7 +41,7 @@ class RegistroApi {
 
   Future<RegistroModel?> registrar(RegistroModel registro) async {
     try {
-      registro.telefono = registro.codigoPais + registro.telefono;
+      registro.telefono = '${registro.codigoPais}-${registro.telefono}';
       var headers = {'Content-Type': 'application/json'};
       var request = http.Request('POST', Uri.parse('$baseUrl/registrar'));
       request.body = registro.toJson();
