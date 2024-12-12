@@ -32,6 +32,16 @@
                 "--dart-define",
                 "API=https://apiinglesdev.azurewebsites.net/api"
             ]
+        },{
+            "name": "local_debug_ingles_devs (debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "toolArgs": [
+                "--dart-define",
+                "API=https://localhost:7263/api"
+            ]
         }
+        
     ]
 }

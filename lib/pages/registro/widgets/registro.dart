@@ -336,18 +336,30 @@ class _RegistroState extends State<Registro> {
         //http://localhost:5015/api/Registro/tecnologias
 
         final newRegistro = await IngesDevApi.registro().registrar(registro);
-        if (newRegistro != null) {
+        if (newRegistro != null &&
+            !newRegistro.nombreCompleto.contains('error')) {
           var box = Hive.box('registro');
           box.putAll(newRegistro.toMap());
-          // ignore: use_build_context_synchronously
+
           context.go('/test');
+        } else {
+          ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+              content: const Text(
+                  "Error al registrar, posiblemente el correo ya existe"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                    },
+                    child: const Text("x"))
+              ]));
         }
       } catch (e) {
         // ignore: avoid_print, use_build_context_synchronously
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
             content: Text(e.toString()),
             actions: [
-              TextButton(onPressed: () {}, child: const Text("hola"))
+              TextButton(onPressed: () {}, child: const Text("Error"))
             ]));
         // ignore: avoid_print
         print(e);

@@ -32,13 +32,19 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
   @override
   void didUpdateWidget(PreguntaWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    select = null;
+    if (widget.pregunta != oldWidget.pregunta ||
+        widget.respuestas != oldWidget.respuestas) {
+      // Actualiza las preguntas y respuestas si son diferentes
+      pregunta = widget.pregunta;
+      respuestas = widget.respuestas;
+      select = null; // Reinicia la selección
+      setState(() {}); // Fuerza la actualización
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-   
-   return Container(
+    return Container(
       padding: const EdgeInsets.only(top: 50, bottom: 30),
       decoration: const BoxDecoration(
         border: Border(

@@ -133,7 +133,13 @@ class _TestPageState extends State<TestPage> {
       }
     }
 
-    setState(() {});
+    setState(() {
+      setState(() {
+        // Este setState asegura que la página completa se reconstruya.
+        showQuestion =
+            List.from(showQuestion); // Fuerza la reconstrucción de widgets
+      });
+    });
   }
 
   List<Widget> header() {

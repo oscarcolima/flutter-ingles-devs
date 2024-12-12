@@ -51,7 +51,8 @@ class RegistroApi {
 
       final res = await response.stream.bytesToString();
       if (response.statusCode == 200) {
-        return RegistroModel.fromJson(res);
+        var reg = RegistroModel.fromJson(res);
+        return reg;
       } else {
         // print(response.statusMessage);
         return null;
