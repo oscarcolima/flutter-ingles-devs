@@ -76,7 +76,7 @@ class _TestPageState extends State<TestPage> {
         body: SingleChildScrollView(
           controller: _scrollController,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 254),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -143,6 +143,7 @@ class _TestPageState extends State<TestPage> {
   }
 
   List<Widget> header() {
+    double screenWidth = MediaQuery.of(context).size.width;
     return [
       Text(
         "Pon a prueba tu Inglés",
