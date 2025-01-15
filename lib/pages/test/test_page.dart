@@ -70,13 +70,22 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return ProxyProvider0(
       update: (_, __) => showQuestion,
       child: PrincipalLayout(
         body: SingleChildScrollView(
           controller: _scrollController,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: EdgeInsets.symmetric(
+                horizontal: (screenWidth < 600
+                    ? 15
+                    : screenWidth < 800
+                        ? 100
+                        : screenWidth < 1000
+                            ? 150
+                            : 256)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

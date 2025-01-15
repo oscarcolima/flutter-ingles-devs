@@ -78,7 +78,7 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
               leading: (i != select)
                   ? const Icon(Icons.circle_outlined)
                   : const Icon(Icons.check_circle_outlined,
-                      color: Color(0xff0D6EFD)),
+                      color: Color.fromARGB(255, 253, 69, 13)),
               title: Text(
                 respuestas[i],
                 style: GoogleFonts.getFont(
@@ -100,6 +100,8 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
 
   Widget generarPegunta() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment
+          .start, // Asegura alineación vertical si el texto es largo
       children: [
         CircleAvatar(
           backgroundColor: const Color(0xff3EB1C8),
@@ -122,12 +124,18 @@ class _PreguntaWidgetState extends State<PreguntaWidget> {
           ),
         ),
         const SizedBox(width: 25),
-        Text(
-          pregunta,
-          style: GoogleFonts.getFont(
-            'Open Sans',
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
+        // Ajustamos el widget Text
+        Expanded(
+          child: Text(
+            pregunta,
+            style: GoogleFonts.getFont(
+              'Open Sans',
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+            softWrap: true, // Permite que el texto se envuelva
+            overflow:
+                TextOverflow.visible, // Alternativa: usar ellipsis para truncar
           ),
         ),
       ],
