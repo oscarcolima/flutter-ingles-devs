@@ -85,16 +85,16 @@ class _FiltroViewState extends State<FiltroView> {
               ?.map(
                 (e) => [
                   e.id == null
-                      ? const TextCellValue("")
+                        ? TextCellValue("")
                       : TextCellValue(e.id!.toString()),
                   TextCellValue(e.nombreCompleto),
                   TextCellValue(e.telefono),
                   TextCellValue(e.email),
                   e.score == null
-                      ? const TextCellValue("")
+                      ?  TextCellValue("")
                       : TextCellValue(e.score!.toString()),
                   e.correctaAnswers == null
-                      ? const TextCellValue("")
+                      ?  TextCellValue("")
                       : TextCellValue(e.correctaAnswers!.toString()),
                   TextCellValue(e.level ?? ""),
                 ],
@@ -105,14 +105,14 @@ class _FiltroViewState extends State<FiltroView> {
       rows.insert(
           0,
           [
-            const TextCellValue("#"),
-            const TextCellValue("Nombre"),
-            const TextCellValue("Teléfono"),
-            const TextCellValue("Correo"),
-            const TextCellValue("Puntaje"),
-            const TextCellValue("Aciertos"),
-            const TextCellValue("Nivel"),
-            const TextCellValue("Fecha"),
+             TextCellValue("#"),
+             TextCellValue("Nombre"),
+             TextCellValue("Teléfono"),
+             TextCellValue("Correo"),
+             TextCellValue("Puntaje"),
+             TextCellValue("Aciertos"),
+             TextCellValue("Nivel"),
+             TextCellValue("Fecha"),
           ].toList());
 
       excel.crearHoja("Cursos", rows);
